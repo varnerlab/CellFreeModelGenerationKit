@@ -16,10 +16,9 @@ struct VLJuliaModelObject <: VLAbstractModelObject
 
     # constructor -
     function VLJuliaModelObject(path_to_model_file, path_to_output_dir; 
-        defaults_file_name::String="Defaults.toml", model_type::Symbol=:static )
+        defaults_file_name::String="Defaults.toml", model_type::Symbol=:static)
         
         # build new model object -
-        this = new(path_to_model_file, path_to_output_dir; 
-            defaults_file_name=defaults_file_name, model_type=model_type)
+        this = new(path_to_model_file, path_to_output_dir, defaults_file_name, model_type)
     end
 end
