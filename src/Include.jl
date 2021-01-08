@@ -9,6 +9,7 @@ include("./base/Checks.jl")
 include("./base/Extensions.jl")
 include("./base/Files.jl")
 include("./base/Parser.jl")
+include("./base/Callbacks.jl")
 
 # language specific codes -
 include("MakeJuliaModel.jl")
@@ -16,3 +17,4 @@ include("MakeJuliaModel.jl")
 # IR dictionary keys -
 const ir_master_reaction_table_key = "_master_reaction_table_key"
 const ir_list_of_molecular_species_key = "_list_of_molecular_species_key"
+const ir_list_of_reaction_tags_key = "_list_of_reaction_tags_key"

@@ -15,8 +15,13 @@ export read_model_document
 export build_julia_model_object
 export generate
 
+# advanced: API call back methods -
+export reorder_reaction_symbol_array
+export reorder_molecular_symbol_array
+
 # export keys -
 export ir_master_reaction_table_key
 export ir_list_of_molecular_species_key
+export ir_list_of_reaction_tags_key
 
 end # module
