@@ -15,7 +15,8 @@ export read_model_document
 export build_julia_model_object
 export generate
 
-# IR dictionary keys -
-const ir_master_reaction_table_key = "_master_reaction_table_key"
+# export keys -
+export ir_master_reaction_table_key
+export ir_list_of_molecular_species_key
 
 end # module

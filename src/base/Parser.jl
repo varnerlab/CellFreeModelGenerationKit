@@ -77,6 +77,8 @@ function parse_vff_model_document(model::VLAbstractModelObject)::VLResult
         return result
     end
     df_metabolic_reaction_table = result.value
+
+    
     # ------------------------------------------------------------------------------------------------ #
 
     # -- GRN SECTION --------------------------------------------------------------------------------- #

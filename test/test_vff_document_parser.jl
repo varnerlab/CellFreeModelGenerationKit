@@ -18,4 +18,4 @@ end
 ir_dictionary = result.value
 
 # look at the reaction table?
-rxn_table = ir_dictionary[CellFreeModelGenerationKit.ir_master_reaction_table_key]
+rxn_table = ir_dictionary[ir_master_reaction_table_key]
