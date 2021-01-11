@@ -1,7 +1,7 @@
 function build_julia_model_object(path_to_model_file::String, path_to_output_dir::String; 
     defaults_file_name::String="Defaults.toml", model_type::Symbol=:static)::VLResult
 
-    # Checks go here
+    # Checks go here -
     # ...
 
     # build the model wrapper -

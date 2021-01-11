@@ -1,3 +1,11 @@
+# where is the package installed?
+const path_to_package = dirname(pathof(@__MODULE__))
+
+# IR dictionary keys -
+const ir_master_reaction_table_key = "_master_reaction_table_key"
+const ir_list_of_molecular_species_key = "_list_of_molecular_species_key"
+const ir_list_of_reaction_tags_key = "_list_of_reaction_tags_key"
+
 # using statement for external packages -
 using DataFrames
 using CSV
@@ -13,8 +21,3 @@ include("./base/Callbacks.jl")
 
 # language specific codes -
 include("MakeJuliaModel.jl")
-
-# IR dictionary keys -
-const ir_master_reaction_table_key = "_master_reaction_table_key"
-const ir_list_of_molecular_species_key = "_list_of_molecular_species_key"
-const ir_list_of_reaction_tags_key = "_list_of_reaction_tags_key"
