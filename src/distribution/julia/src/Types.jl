@@ -1,5 +1,5 @@
 # ----------------------------------------------------------------------------------- #
-# Copyright (c) 2020 Varnerlab
+# Copyright (c) 2021 Varnerlab
 # Robert Frederick School of Chemical and Biomolecular Engineering
 # Cornell University, Ithaca NY 14850
 

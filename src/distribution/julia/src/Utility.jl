@@ -57,7 +57,8 @@ function build_control_constants_dictionary(path_to_ec_data_file::String)::Dict{
     return control_parameter_data_dictionary
 end
 
-function build_static_fba_problem_object(data_dictionary::Dict{String,Any}; is_minimum_flag::Bool=true)::VLStaticFBAProblem
+function build_static_fba_problem_object(data_dictionary::Dict{String,Any}; 
+    is_minimum_flag::Bool=true)::VLStaticFBAProblem
     
     # takes stuff from the dd and bundles it up as a static problem object -
 
@@ -74,7 +75,8 @@ function build_static_fba_problem_object(data_dictionary::Dict{String,Any}; is_m
     return problem
 end
 
-function build_dynamic_fba_problem_object(data_dictionary::Dict{String,Any}; is_minimum_flag::Bool=true)::VLDynamicFBAProblem
+function build_dynamic_fba_problem_object(data_dictionary::Dict{String,Any}; 
+    is_minimum_flag::Bool=true)::VLDynamicFBAProblem
     
     # takes stuff from the dd and bundles it up as a static problem object -
 

@@ -1,4 +1,12 @@
+# include the strategy for this language -
+include("./strategy/JuliaStrategy.jl")
+
 function generate(julia_model_object::VLJuliaModelObject)
+
+    # initialize -
+    src_component_set = Set{NamedTuple}()
+    config_component_set = Set{NamedTuple}()
+    root_component_set = Set{NamedTuple}()
 
     try
 
@@ -20,6 +28,34 @@ function generate(julia_model_object::VLJuliaModelObject)
 
         # Transfer root toml files -> these files are moved to the root dir of the model
         transfer_distribution_files("$(path_to_package)/distribution/julia/root", "$(path_to_output_dir)",".toml")
+
+        # start building the custom program components -
+        # Build the Data.jl data dictionary -
+        program_component = build_data_dictionary_program_component(ir_dictionary)
+        if (isa(program_component.value, Exception) == true)
+            throw(program_component.value)
+        end
+        data_dictionary_component = program_component.value
+        push!(src_component_set, data_dictionary_component)
+
+        # Build the Kinetics.jl file which holds all the rates -
+        program_component = build_kinetics_program_component(ir_dictionary)
+        if (isa(program_component.value, Exception) == true)
+            throw(program_component.value)
+        end
+        kinetics_file_component = program_component.value
+        push!(src_component_set, kinetics_file_component)
+
+        # Build the Control.jl file which holds the control values for each rate -
+        program_component = build_control_program_component(ir_dictionary)
+        if (isa(program_component.value, Exception) == true)
+            throw(program_component.value)
+        end
+        control_file_component = program_component.value
+        push!(src_component_set, control_file_component)
+
+        # dump src and config components to disk -
+        write_program_components_to_disk("$(path_to_output_dir)/src", src_component_set)
 
     catch error
         # if we catch an error, then rethrow -

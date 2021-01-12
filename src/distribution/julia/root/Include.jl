@@ -31,9 +31,6 @@ Pkg.activate(_PATH_TO_ROOT)
 Pkg.instantiate()
 
 # system packages - these are required to be installed to solve the modeling problem
-# check: - are these are installed? 
-# y => all is good with the world.
-# n => Ooops, we need to install them
 using LinearAlgebra # pre-installed w/Julia
 using Statistics    # pre-installed w/Julia
 using GLPK
