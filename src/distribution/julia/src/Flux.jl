@@ -1,5 +1,5 @@
 # ----------------------------------------------------------------------------------- #
-# Copyright (c) 2021 Varnerlab
+# Copyright (c) 2020 Varnerlab
 # Robert Frederick School of Chemical and Biomolecular Engineering
 # Cornell University, Ithaca NY 14850
 
@@ -161,7 +161,7 @@ function calculate_optimal_flux_distribution(stoichiometric_matrix::Array{Float6
     # Calculate the uptake array -
     uptake_array = stoichiometric_matrix*calculated_flux_array;
 
-    # results_tuple -
+    # return results_tuple -
     results_tuple = (objective_value=objective_value, calculated_flux_array=calculated_flux_array, 
         dual_value_array=dual_value_array, uptake_array=uptake_array, exit_flag=exit_flag,
         status_flag=status_flag)
