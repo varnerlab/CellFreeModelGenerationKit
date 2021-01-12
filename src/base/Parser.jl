@@ -80,6 +80,22 @@ end
 
 # ------------------------------------------------------------------------------------------------ #
 
+function parse_vff_sequence_section(buffer::Array{String,1})::VLResult
+
+    # initialize -
+    # ...
+
+    try
+
+        # extract the sequence section -
+        sequence_section_buffer = _extract_section(buffer, "#TXTL-SEQUENCE::START", "#TXTL-SEQUENCE::START")
+
+    catch error
+        return VLResult(error)
+    end
+
+end
+
 function parse_vff_metabolic_section(buffer::Array{String,1}; 
     molecular_callback::Union{Function,Nothing} = nothing, reaction_callback::Union{Function,Nothing} = nothing)::VLResult
 

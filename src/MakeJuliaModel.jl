@@ -1,7 +1,8 @@
 # include the strategy for this language -
 include("./strategy/JuliaStrategy.jl")
 
-function generate(julia_model_object::VLJuliaModelObject)
+function generate(julia_model_object::VLJuliaModelObject; 
+    intermediate_representation_dictionary::Union{Nothing,Dict{String,Any}} = nothing)
 
     # initialize -
     src_component_set = Set{NamedTuple}()
@@ -10,12 +11,17 @@ function generate(julia_model_object::VLJuliaModelObject)
 
     try
 
-        # parse the vff document -
-        result = parse_vff_model_document(julia_model_object)
-        if (isa(result.value,Exception) == true)
-            rethrow(result.value) # re-throw
+        # check: do we have an intermediate representation?
+        ir_dictionary = intermediate_representation_dictionary
+        if (isnothing(intermediate_representation_dictionary) == true)
+            
+            # parse the vff document -
+            result = parse_vff_model_document(julia_model_object)
+            if (isa(result.value,Exception) == true)
+                rethrow(result.value) # re-throw
+            end
+            ir_dictionary = result.value
         end
-        ir_dictionary = result.value
 
         # Step 1: Copy the "distribution" files to thier location -
         path_to_output_dir = julia_model_object.path_to_output_dir
