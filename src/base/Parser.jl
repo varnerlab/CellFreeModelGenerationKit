@@ -100,7 +100,7 @@ function parse_vff_sequence_section(buffer::Array{String,1})::VLResult
         # ok, so now lets load the tmp file in CSV, and put into a 
         df_tmp = CSV.read(IOBuffer(flat_buffer),DataFrame; header=false)
 
-        # let's creatr work 
+        # let's create 
 
 
     catch error
