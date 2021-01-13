@@ -90,6 +90,19 @@ function parse_vff_sequence_section(buffer::Array{String,1})::VLResult
         # extract the sequence section -
         sequence_section_buffer = _extract_section(buffer, "#TXTL-SEQUENCE::START", "#TXTL-SEQUENCE::START")
 
+        # make the buffer flat, and then write to tmp_file -
+        flat_buffer = ""
+        for line in sequence_section_buffer
+            flat_buffer *= line
+            flat_buffer *= "\n"
+        end
+        
+        # ok, so now lets load the tmp file in CSV, and put into a 
+        df_tmp = CSV.read(IOBuffer(flat_buffer),DataFrame; header=false)
+
+        # let's creatr work 
+
+
     catch error
         return VLResult(error)
     end
@@ -153,13 +166,13 @@ function parse_vff_model_document(model::VLAbstractModelObject;
     vff_file_buffer = read_model_document(vff_model_file_path)
 
     # -- SEQ SECTION --------------------------------------------------------------------------------- #
+    result = parse_vff_sequence_section(vff_file_buffer)
     # ------------------------------------------------------------------------------------------------ #
 
     # -- METABOLISM SECTION -------------------------------------------------------------------------- #
     result = parse_vff_metabolic_section(vff_file_buffer; 
         molecular_callback = molecular_callback, reaction_callback = reaction_callback)
-    
-        if (isa(result.value,Exception) == true)
+    if (isa(result.value,Exception) == true)
         return result
     end
     metabolic_section_results_tuple = result.value
