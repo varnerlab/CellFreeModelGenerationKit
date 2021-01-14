@@ -1,4 +1,87 @@
 // ***************************************************************************** //
+#TXTL-SEQUENCE::START
+// Sequence record format:
+// {TX|TL},{gene_symbol|protein_symbol},{RNAP_symbol|Ribosome_symbol}::sequence;
+
+// -- nsp1 gene and protein --------------------------------------------------//
+// Host translation inhibitor nsp1
+// Inhibits host translation by interacting with the 40S ribosomal subunit.
+// The nsp1-40S ribosome complex further induces an endonucleolytic cleavage near the 5'UTR of host mRNAs, targeting them for degradation.
+// Viral mRNAs are not susceptible to nsp1-mediated endonucleolytic RNA cleavage thanks to the presence of a 5'-end leader sequence and are therefore protected from degradation.
+// By suppressing host gene expression, nsp1 facilitates efficient viral gene expression in infected cells and evasion from host immune response.
+
+X,RdRp,RX::agcgcggatgcgcagagctttctgaaccgcgtgtgcggcgtgagcgcggcgcgcctgacc
+ccgtgcggcaccggcaccagcaccgatgtggtgtatcgcgcgtttgatatttataacgat
+aaagtggcgggctttgcgaaatttctgaaaaccaactgctgccgctttcaggaaaaagat
+gaagatgataacctgattgatagctattttgtggtgaaacgccatacctttagcaactat
+cagcatgaagaaaccatttataacctgctgaaagattgcccggcggtggcgaaacatgat
+ttttttaaatttcgcattgatggcgatatggtgccgcatattagccgccagcgcctgacc
+aaatataccatggcggatctggtgtatgcgctgcgccattttgatgaaggcaactgcgat
+accctgaaagaaattctggtgacctataactgctgcgatgatgattattttaacaaaaaa
+gattggtatgattttgtggaaaacccggatattctgcgcgtgtatgcgaacctgggcgaa
+cgcgtgcgccaggcgctgctgaaaaccgtgcagttttgcgatgcgatgcgcaacgcgggc
+attgtgggcgtgctgaccctggataaccaggatctgaacggcaactggtatgattttggc
+gattttattcagaccaccccgggcagcggcgtgccggtggtggatagctattatagcctg
+ctgatgccgattctgaccctgacccgcgcgctgaccgcggaaagccatgtggataccgat
+ctgaccaaaccgtatattaaatgggatctgctgaaatatgattttaccgaagaacgcctg
+aaactgtttgatcgctattttaaatattgggatcagacctatcatccgaactgcgtgaac
+tgcctggatgatcgctgcattctgcattgcgcgaactttaacgtgctgtttagcaccgtg
+tttccgccgaccagctttggcccgctggtgcgcaaaatttttgtggatggcgtgccgttt
+gtggtgagcaccggctatcattttcgcgaactgggcgtggtgcataaccaggatgtgaac
+ctgcatagcagccgcctgagctttaaagaactgctggtgtatgcggcggatccggcgatg
+catgcggcgagcggcaacctgctgctggataaacgcaccacctgctttagcgtggcggcg
+ctgaccaacaacgtggcgtttcagaccgtgaaaccgggcaactttaacaaagatttttat
+gattttgcggtgagcaaaggcttttttaaagaaggcagcagcgtggaactgaaacatttt
+ttttttgcgcaggatggcaacgcggcgattagcgattatgattattatcgctataacctg
+ccgaccatgtgcgatattcgccagctgctgtttgtggtggaagtggtggataaatatttt
+gattgctatgatggcggctgcattaacgcgaaccaggtgattgtgaacaacctggataaa
+agcgcgggctttccgtttaacaaatggggcaaagcgcgcctgtattatgatagcatgagc
+tatgaagatcaggatgcgctgtttgcgtataccaaacgcaacgtgattccgaccattacc
+cagatgaacctgaaatatgcgattagcgcgaaaaaccgcgcgcgcaccgtggcgggcgtg
+agcatttgcagcaccatgaccaaccgccagtttcatcagaaactgctgaaaagcattgcg
+gcgacccgcggcgcgaccgtggtgattggcaccagcaaattttatggcggctggcataac
+atgctgaaaaccgtgtatagcgatgtggaaaacccgcatctgatgggctgggattatccg
+aaatgcgatcgcgcgatgccgaacatgctgcgcattatggcgagcctggtgctggcgcgc
+aaacataccacctgctgcagcctgagccatcgcttttatcgcctggcgaacgaatgcgcg
+caggtgctgagcgaaatggtgatgtgcggcggcagcctgtatgtgaaaccgggcggcacc
+agcagcggcgatgcgaccaccgcgtatgcgaacagcgtgtttaacatttgccaggcggtg
+accgcgaacgtgaacgcgctgctgagcaccgatggcaacaaaattgcggataaatatgtg
+cgcaacctgcagcatcgcctgtatgaatgcctgtatcgcaaccgcgatgtggataccgat
+tttgtgaacgaattttatgcgtatctgcgcaaacattttagcatgatgattctgagcgat
+gatgcggtggtgtgctttaacagcacctatgcgagccagggcctggtggcgagcattaaa
+aactttaaaagcgtgctgtattatcagaacaacgtgtttatgagcgaagcgaaatgctgg
+accgaaaccgatctgaccaaaggcccgcatgaattttgcagccagcataccatgctggtg
+aaacagggcgatgattatgtgtatctgccgtatccggatccgagccgcattctgggcgcg
+ggctgctttgtggatgatattgtgaaaaccgatggcaccctgatgattgaacgctttgtg
+agcctggcgattgatgcgtatccgctgaccaaacatccgaaccaggaatatgcggatgtg
+tttcatctgtatctgcagtatattcgcaaactgcatgatgaactgaccggccatatgctg
+gatatgtatagcgtgatgctgaccaacgataacaccagccgctattgggaaccggaattt
+tatgaagcgatgtataccccgcataccgtgctgcag;
+
+L,RdRp,RL::SADAQSFLNRVCGVSAARLTPCGTGTSTDVVYRAFDIYNDKVAGFAKFLK
+TNCCRFQEKDEDDNLIDSYFVVKRHTFSNYQHEETIYNLLKDCPAVAKHD
+FFKFRIDGDMVPHISRQRLTKYTMADLVYALRHFDEGNCDTLKEILVTYN
+CCDDDYFNKKDWYDFVENPDILRVYANLGERVRQALLKTVQFCDAMRNAG
+IVGVLTLDNQDLNGNWYDFGDFIQTTPGSGVPVVDSYYSLLMPILTLTRA
+LTAESHVDTDLTKPYIKWDLLKYDFTEERLKLFDRYFKYWDQTYHPNCVN
+CLDDRCILHCANFNVLFSTVFPPTSFGPLVRKIFVDGVPFVVSTGYHFRE
+LGVVHNQDVNLHSSRLSFKELLVYAADPAMHAASGNLLLDKRTTCFSVAA
+LTNNVAFQTVKPGNFNKDFYDFAVSKGFFKEGSSVELKHFFFAQDGNAAI
+SDYDYYRYNLPTMCDIRQLLFVVEVVDKYFDCYDGGCINANQVIVNNLDK
+SAGFPFNKWGKARLYYDSMSYEDQDALFAYTKRNVIPTITQMNLKYAISA
+KNRARTVAGVSICSTMTNRQFHQKLLKSIAATRGATVVIGTSKFYGGWHN
+MLKTVYSDVENPHLMGWDYPKCDRAMPNMLRIMASLVLARKHTTCCSLSH
+RFYRLANECAQVLSEMVMCGGSLYVKPGGTSSGDATTAYANSVFNICQAV
+TANVNALLSTDGNKIADKYVRNLQHRLYECLYRNRDVDTDFVNEFYAYLR
+KHFSMMILSDDAVVCFNSTYASQGLVASIKNFKSVLYYQNNVFMSEAKCW
+TETDLTKGPHEFCSQHTMLVKQGDDYVYLPYPDPSRILGAGCFVDDIVKT
+DGTLMIERFVSLAIDAYPLTKHPNQEYADVFHLYLQYIRKLHDELTGHML
+DMYSVMLTNDNTSRYWEPEFYEAMYTPHTVLQ;
+
+#TXTL-SEQUENCE::STOP
+// ***************************************************************************** //
+
+// ***************************************************************************** //
 #METABOLISM::START
 
 // ======================================================================
