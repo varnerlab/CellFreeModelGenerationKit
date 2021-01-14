@@ -1,7 +1,7 @@
 using CellFreeModelGenerationKit
 
 # path to test metabolism file -
-path_to_test_metabolism_file = "./test/data/Metabolism.vff"
+path_to_test_metabolism_file = "./test/data/Test.vff"
 path_to_output_dir = "./test/model_generated/model/"
 
 # need to build a model object -

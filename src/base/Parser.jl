@@ -143,6 +143,7 @@ function parse_vff_sequence_section(buffer::Array{String,1})::VLResult
 
         # Finally, add everything to new data frame -
         new_df = DataFrame(operation_type=operation_type_array,
+            molecular_type=molecular_species_type_array,
             molecular_symbol=molecular_symbol_array,
             macromolecular_symbol=macromolecular_symbol_array,
             sequence=sequence_array)
