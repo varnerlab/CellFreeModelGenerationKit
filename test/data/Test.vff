@@ -3,27 +3,76 @@
 // Sequence record format:
 // {TX|TL},{gene_symbol|protein_symbol},{RNAP_symbol|Ribosome_symbol}::sequence;
 
-// -- nsp1 gene and protein --------------------------------------------------//
-// Host translation inhibitor nsp1
-// Inhibits host translation by interacting with the 40S ribosomal subunit.
-// The nsp1-40S ribosome complex further induces an endonucleolytic cleavage near the 5'UTR of host mRNAs, targeting them for degradation.
-// Viral mRNAs are not susceptible to nsp1-mediated endonucleolytic RNA cleavage thanks to the presence of a 5'-end leader sequence and are therefore protected from degradation.
-// By suppressing host gene expression, nsp1 facilitates efficient viral gene expression in infected cells and evasion from host immune response.
+X,cI_ssrA,RX::atgagcacaaaaaagaaaccattaacacaagagcagcttgaggacgcacgtcgccttaaagcaatttatgaaaaaaagaaaaatgaacttggcttatcc
+caggaatctgtcgcagacaagatggggatggggcagtcaggcgttggtgctttatttaatggcatcaatgcattaaatgcttataacgccgcattgctt
+gcaaaaattctcaaagttagcgttgaagaatttagcccttcaatcgccagagaaatctacgagatgtatgaagcggttagtatgcagccgtcacttaga
+agtgagtatgagtaccctgttttttctcatgttcaggcagggatgttctcacctgagcttagaacctttaccaaaggtgatgcggagagatgggtaagc
+acaaccaaaaaagccagtgattctgcattctggcttgaggttgaaggtaattccatgaccgcaccaacaggctccaagccaagctttcctgacggaatg
+ttaattctcgttgaccctgagcaggctgttgagccaggtgatttctgcatagccagacttgggggtgatgagtttaccttcaagaaactgatcagggat
+agcggtcaggtgtttttacaaccactaaacccacagtacccaatgatcccatgcaatgagagttgttccgttgtggggaaagttatcgctagtcagtgg
+cctgaagagacgtttggctgtgcagcaaacgacgaaaactacgctttagctgcttaa;
 
-X,nsp1,RX::atggaaagcctggtgccgggctttaacgaaaaaacccatgtgcagctgagcctgccggtg
-ctgcaggtgcgcgatgtgctggtgcgcggctttggcgatagcgtggaagaagtgctgagc
-gaagcgcgccagcatctgaaagatggcacctgcggcctggtggaagtggaaaaaggcgtg
-ctgccgcagctggaacagccgtatgtgtttattaaacgcagcgatgcgcgcaccgcgccg
-catggccatgtgatggtggaactggtggcggaactggaaggcattcagtatggccgcagc
-ggcgaaaccctgggcgtgctggtgccgcatgtgggcgaaattccggtggcgtatcgcaaa
-gtgctgctgcgcaaaaacggcaacaaaggcgcgggcggccatagctatggcgcggatctg
-aaaagctttgatctgggcgatgaactgggcaccgatccgtatgaagattttcaggaaaac
-tggaacaccaaacatagcagcggcgtgacccgcgaactgatgcgcgaactgaacggcggc;
+L,cI_ssrA,RL::MSTKKKPLTQEQLEDARRLK
+AIYEKKKNELGLSQESVADK
+MGMGQSGVGALFNGINALNA
+YNAALLAKILKVSVEEFSPS
+IAREIYEMYEAVSMQPSLRS
+EYEYPVFSHVQAGMFSPELR
+TFTKGDAERWVSTTKKASDS
+AFWLEVEGNSMTAPTGSKPS
+FPDGMLILVDPEQAVEPGDF
+CIARLGGDEFTFKKLIRDSG
+QVFLQPLNPQYPMIPCNESC
+SVVGKVIASQWPEETFGCAA
+NDENYALAA;
 
-L,nsp1,RL::MESLVPGFNEKTHVQLSLPVLQVRDVLVRGFGDSVEEVLSEARQHLKDGT
-CGLVEVEKGVLPQLEQPYVFIKRSDARTAPHGHVMVELVAELEGIQYGRS
-GETLGVLVPHVGEIPVAYRKVLLRKNGNKGAGGHSYGADLKSFDLGDELG
-TDPYEDFQENWNTKHSSGVTRELMRELNGG;
+// -- sigma28 gene and protein ----------------------------------------------- //
+X,s28,RX::atgaattcactctataccgctgaaggtgtaatggataaacactcgctgtggcagcgttatgtcccgctggtgcgtcacgaagcattg
+cgcctgcaggttcgactgcccgcgagcgtggaacttgacgatctgctacaggcgggcggcattgggttacttaatgccgtcgaacgc
+tatgacgccctacaaggaacggcatttacaacttacgcagtgcagcgtatccgtggcgctatgctggatgaacttcgcagccgtgac
+tgggtgccgcgcagcgtgcgacgcaacgcgcgtgaagtggcacaggcaatagggcaactggagcaggaacttggccgcaacgccacg
+gaaactgaggtagcggaacgtttagggatcgatattgccgattatcgccaaatgttgctcgacaccaataacagccagctcttctcc
+tacgatgagtggcgcgaagagcacggcgatagcatcgaactggttactgatgatcatcagcgagaaaacccgctacaacaactactg
+gacagtaatctgcgccagcgggtgatggaagccatcgaaacgttgccggagcgcgaaaaactggtattaaccctctattaccaggaa
+gagctgaatctcaaagagattggcgcggtgctggaggtcggggaatcgcgggtcagtcagttacacagccaggctattaaacggtta
+cgcactaaactgggtaagttataa;
+
+L,s28,RL::MNSLYTAEGVMDKHSLWQRY
+VPLVRHEALRLQVRLPASVE
+LDDLLQAGGIGLLNAVERYD
+ALQGTAFTTYAVQRIRGAML
+DELRSRDWVPRSVRRNAREV
+AQAIGQLEQELGRNATETEV
+AERLGIDIADYRQMLLDTNN
+SQLFSYDEWREEHGDSIELV
+TDDHQRENPLQQLLDSNLRQ
+RVMEAIETLPEREKLVLTLY
+YQEELNLKEIGAVLEVGESR
+VSQLHSQAIKRLRTKLGKL;
+
+// -- deGFP-ssrA gene and protein -------------------------------------------- //
+X,deGFP_ssrA,RX::atggagcttttcactggcgttgttcccatcctggtcgagctggacggcgacgtaaacggccacaagttcagcgtgtccggc
+gagggcgagggcgatgccacctacggcaagctgaccctgaagttcatctgcaccaccggcaagctgcccgtgccctggccc
+accctcgtgaccaccctgacctacggcgtgcagtgcttcagccgctaccccgaccacatgaagcagcacgacttcttcaag
+tccgccatgcccgaaggctacgtccaggagcgcaccatcttcttcaaggacgacggcaactacaagacccgcgccgaggtg
+aagttcgagggcgacaccctggtgaaccgcatcgagctgaagggcatcgacttcaaggaggacggcaacatcctggggcac
+aagctggagtacaactacaacagccacaacgtctatatcatggccgacaagcagaagaacggcatcaaggtgaacttcaag
+atccgccacaacatcgaggacggcagcgtgcagctcgccgaccactaccagcagaacacccccatcggcgacggccccgtg
+ctgctgcccgacaaccactacctgagcacccagtccgccctgagcaaagaccccaacgagaagcgcgatcacatggtcctg
+ctggagttcgtgaccgccgccgggatcgcagcaaacgacgaaaactacgctttagctgcttaa;
+
+L,deGFP_ssrA,RL::MELFTGVVPILVELDGDVNG
+HKFSVSGEGEGDATYGKLTL
+KFICTTGKLPVPWPTLVTTL
+TYGVQCFSRYPDHMKQHDFF
+KSAMPEGYVQERTIFFKDDG
+NYKTRAEVKFEGDTLVNRIE
+LKGIDFKEDGNILGHKLEYN
+YNSHNVYIMADKQKNGIKVN
+FKIRHNIEDGSVQLADHYQQ
+NTPIGDGPVLLPDNHYLSTQ
+SALSKDPNEKRDHMVLLEFV
+TAAGIAANDENYALAA;
 
 #TXTL-SEQUENCE::STOP
 // ***************************************************************************** //

@@ -89,7 +89,9 @@ function parse_vff_sequence_section(buffer::Array{String,1})::VLResult
     molecular_species_type_array = Array{Symbol,1}()
     sequence_array = Array{String,1}()
 
-    tmp_buffer = Array{String,1}()
+    # what are the alphabets for the sequences?
+    dna_sequence_alphabet = ["a","t","g","c"]
+    protein_sequence_alphabet = ["G","A","L","M","F","W","K","Q","E","S","P","V","I","C","Y","H","R","N","D","T"]
 
     try
 
@@ -120,7 +122,7 @@ function parse_vff_sequence_section(buffer::Array{String,1})::VLResult
         # what type is the molecular symbol?
         for operation_type in operation_type_array
             if (operation_type == :X)
-                push!(molecular_species_type_array,:MRNA)
+                push!(molecular_species_type_array,:DNA)
             else
                 push!(molecular_species_type_array,:PROTEIN)
             end        
@@ -142,14 +144,21 @@ function parse_vff_sequence_section(buffer::Array{String,1})::VLResult
         end
 
         # Finally, add everything to new data frame -
-        new_df = DataFrame(operation_type=operation_type_array,
-            molecular_type=molecular_species_type_array,
+        new_sequence_df = DataFrame(operation_type=operation_type_array,
+            sequence_type=molecular_species_type_array,
             molecular_symbol=molecular_symbol_array,
             macromolecular_symbol=macromolecular_symbol_array,
             sequence=sequence_array)
 
+        # Analysis of sequences -
+        # process the DNA sequence -
+        dna_sequence_df = filter(row->row.sequence_type == :DNA,new_sequence_df)
+        
+    
+
+
         # return the new_df -
-        return VLResult(new_df)
+        return VLResult(new_sequence_df)
     catch error
         return VLResult(error)
     end
