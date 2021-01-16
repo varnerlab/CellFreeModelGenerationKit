@@ -58,3 +58,8 @@ function include_function(path_to_src_file::String, prefix_pad_string::String)::
 
     return src_buffer
 end
+
+function _request_user_input(prompt::String="")::String
+    print(prompt)
+    return chomp(readline())
+end

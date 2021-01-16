@@ -95,7 +95,6 @@ function transfer_distribution_files(path_to_distribution_files::String,
     end
 end
 
-
 function write_program_components_to_disk(file_path::String, set_of_program_components::Set{NamedTuple})
 
     # check - do we have teh file path?
@@ -137,4 +136,73 @@ function write_program_components_to_disk(file_path::String, set_of_program_comp
           error("unsupported program component type: $(component_type)")
       end
     end
-  end
+end
+
+function move_existing_project_at_path(path_to_existing_project::String)::Bool
+
+    # we are getting called *if* we already know there is a dir conflict -
+    # if this is getting called, we have an existing dir where the user wants to write code.
+    # we need then create a new dir called *.0, and mv the offending dir to this location?
+    # return true if this worked, otherwise false -
+
+    # parent and child dir that we are generating into -
+    parent_dir = dirname(path_to_existing_project)
+    child_dir = basename(path_to_existing_project)
+    destination_path = ""
+
+    # current backup index  -
+    current_backup_index = 0
+
+    # do we already have the destination?
+    loop_flag = true
+    while loop_flag
+
+         # make a destination path - 
+        destination_path = joinpath(parent_dir,"$(child_dir).$(current_backup_index)")
+
+        # we don't have this dir, we are done -
+        if (isdir(destination_path) == false)
+            loop_flag = false
+        end    
+
+        # ok, looks like we already have this dir, update the counter -
+        current_backup_index = current_backup_index + 1
+    end
+    
+    # mv -
+    mv(path_to_existing_project, destination_path)
+
+    # check - 
+    if (isdir(destination_path) == false)
+        return false
+    end
+
+    return true
+end
+
+function move_existing_file_at_path(path_to_existing_file::String)::Bool
+end
+
+
+"""
+    generate_default_project(path_to_project_dir::String)
+
+    Generates a default project structure which contains an empty model file and Defaults.toml file.
+
+    Inputs:
+    path_to_project_dir = path to where you want model code to be generated
+"""
+function generate_default_project_file(path_to_project_file::String)::VLResult
+    
+    # ok, if we get here, then we have a clean place to generate the default project structure -
+    # We need to two things for a project, the defaults file, and a blank network file with all the sections -
+    
+    # TODO: do we need check for existing file w/same?
+
+    # Transfer distrubtion files to the output -> these files are shared between model types -
+    # TODO: replace w/joinpath?
+    transfer_distribution_files("$(path_to_package)/distribution/julia", "$(path_to_project_file)",".toml")
+
+    # ok, so return nothing if everything worked ...
+    return VLResult(nothing)
+end

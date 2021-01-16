@@ -13,9 +13,9 @@ using Dates
 
 # include package codes -
 include("./base/Types.jl")
+include("./base/Extensions.jl")
 include("./base/Factory.jl")
 include("./base/Checks.jl")
-include("./base/Extensions.jl")
 include("./base/Files.jl")
 include("./base/Parser.jl")
 include("./base/Callbacks.jl")

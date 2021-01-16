@@ -11,6 +11,7 @@ export parse_vff_model_document
 export parse_vff_metabolic_section
 export parse_vff_sequence_section
 export read_model_document
+export generate_default_project
 
 # export methods -
 export build_julia_model_object

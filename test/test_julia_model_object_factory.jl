@@ -10,6 +10,3 @@ if (isa(build_result.value, Exception) == true)
     @show build_result.value
 end
 julia_model_object = build_result.value
-
-# generate code -
-generate(julia_model_object)

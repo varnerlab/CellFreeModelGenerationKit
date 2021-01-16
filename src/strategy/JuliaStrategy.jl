@@ -1,5 +1,5 @@
 # -- PRIVATE FUNCTIONS NOT EXPORTED -------------------------------------------------------------- #
-function build_copyright_header_buffer(intermediate_dictionary::Dict{String,Any})
+function _build_copyright_header_buffer(intermediate_dictionary::Dict{String,Any})
   
     # What is the current year?
     current_year = string(Dates.year(now()))
@@ -34,6 +34,7 @@ function build_copyright_header_buffer(intermediate_dictionary::Dict{String,Any}
     return buffer  
 end
 
+# -- PUBLIC FUNCTIONS EXPORTED --------------------------------------------------------------------- #
 function build_data_dictionary_program_component(intermediate_dictionary::Dict{String,Any})::VLResult
 
     # initialize -
@@ -43,7 +44,7 @@ function build_data_dictionary_program_component(intermediate_dictionary::Dict{S
     try 
 
         # build the header -
-        header_buffer = build_copyright_header_buffer(intermediate_dictionary)
+        header_buffer = _build_copyright_header_buffer(intermediate_dictionary)
         +(buffer, header_buffer)
 
         +(buffer,"function generate_default_data_dictionary(")
@@ -82,7 +83,7 @@ function build_control_program_component(intermediate_dictionary::Dict{String,An
     try
 
         # build the header -
-        header_buffer = build_copyright_header_buffer(intermediate_dictionary)
+        header_buffer = _build_copyright_header_buffer(intermediate_dictionary)
         +(buffer, header_buffer)
         +(buffer, "\n")
 
@@ -113,7 +114,7 @@ function build_kinetics_program_component(intermediate_dictionary::Dict{String,A
     try 
 
         # build the header -
-        header_buffer = build_copyright_header_buffer(intermediate_dictionary)
+        header_buffer = _build_copyright_header_buffer(intermediate_dictionary)
         +(buffer, header_buffer)
         +(buffer, "\n")
 
@@ -132,4 +133,4 @@ function build_kinetics_program_component(intermediate_dictionary::Dict{String,A
         return VLResult(error)
     end
 end
-# ------------------------------------------------------------------------------------------------ #
+# --------------------------------------------------------------------------------------------------- #

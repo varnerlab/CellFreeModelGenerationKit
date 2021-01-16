@@ -61,7 +61,8 @@ function generate(julia_model_object::VLJuliaModelObject;
         push!(src_component_set, control_file_component)
 
         # dump src and config components to disk -
-        write_program_components_to_disk("$(path_to_output_dir)/src", src_component_set)
+        _output_path_to_src_distribution_files = joinpath(path_to_output_dir,"src")
+        write_program_components_to_disk(_output_path_to_src_distribution_files, src_component_set)
 
     catch error
         # if we catch an error, then rethrow -

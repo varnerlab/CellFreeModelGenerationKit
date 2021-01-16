@@ -154,6 +154,14 @@ function parse_vff_sequence_section(buffer::Array{String,1})::VLResult
         # process the DNA sequence -
         dna_sequence_df = filter(row->row.sequence_type == :DNA,new_sequence_df)
         
+        # get dimension of the dna data frame -
+        (number_of_dna_sequences,number_of_cols_dna) = size(dna_sequence_df)
+        for dna_sequence_index = 1:number_of_dna_sequences
+            
+            # ok, get the molecular symbol -
+            
+
+        end
     
 
 
