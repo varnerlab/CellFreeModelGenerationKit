@@ -2,5 +2,7 @@
 
 ![Documentation](https://github.com/varnerlab/CellFreeModelGenerationKit.jl/workflows/Documentation/badge.svg)
 
+[![](https://img.shields.io/badge/docs-stable-blue.svg)](https://varnerlab.github.io/CellFreeModelGenerationKit.jl/dev)
+
 # CellFreeModelGenerationKit
 Cell free model generation tools
