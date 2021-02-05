@@ -17,5 +17,6 @@ makedocs(
 # for more information.
 deploydocs(
     repo = "github.com/varnerlab/CellFreeModelGenerationKit.jl.git",
+    devbranch = "main",
     devurl = "dev",
 )
