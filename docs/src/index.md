@@ -1,4 +1,4 @@
-# CFMG.jl Documentation
+# CellFreeModelGenerationKit.jl Documentation
 
 ```@contents
 ```
