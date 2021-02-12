@@ -2,7 +2,8 @@
 include("./strategy/JuliaStrategy.jl")
 
 function generate(julia_model_object::VLJuliaModelObject; 
-    intermediate_representation_dictionary::Union{Nothing,Dict{String,Any}} = nothing)
+    intermediate_representation_dictionary::Union{Nothing,Dict{String,Any}} = nothing, 
+    logger::Union{Nothing,SimpleLogger} = nothing)
 
     # initialize -
     src_component_set = Set{NamedTuple}()
@@ -65,7 +66,16 @@ function generate(julia_model_object::VLJuliaModelObject;
         write_program_components_to_disk(_output_path_to_src_distribution_files, src_component_set)
 
     catch error
-        # if we catch an error, then rethrow -
-        rethrow(error)
+        
+        # let the user know that something went wrong, and prompt them to the log file -
+        @info "Model code generation failed before completion. If logging is enabled, check the log file."
+
+        # ok, so if we get an error, log it (if we have a logger), then explode -
+        if (isnothing(logger) == false)
+            with_logger(logger) do 
+                # generate a back trace -
+                @error "Ooops! we encountered an error" exception=(e, catch_backtrace())
+            end
+        end
     end
 end

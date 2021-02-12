@@ -217,6 +217,34 @@ function parse_vff_metabolic_section(buffer::Array{String,1};
     end
 end
 
+function parse_vff_species_bounds_section(buffer::Array{String,1})::VLResult
+
+    # initialize -
+    permissible_bounds_set = Set{Symbol}()
+
+    try 
+
+        # fill in the permissible_bounds_set -
+        push!(permissible_bounds_set, :SINK)
+        push!(permissible_bounds_set, :SOURCE)
+        push!(permissible_bounds_set, :UNBOUNDED)
+
+        # extract the species bounds section -
+        species_bounds_section_buffer = _extract_section(buffer, "#SPECIES_BOUNDS::START", "#SPECIES_BOUNDS::STOP")
+
+        # process each bounds record -
+        for species_bounds_record in species_bounds_section_buffer
+            
+            # split -
+
+        
+        end 
+
+    catch error
+        return VLResult(error)
+    end
+end
+
 function parse_vff_model_document(model::VLAbstractModelObject; 
         molecular_callback::Union{Function,Nothing} = nothing, reaction_callback::Union{Function,Nothing} = nothing)::VLResult
 
@@ -243,6 +271,9 @@ function parse_vff_model_document(model::VLAbstractModelObject;
     # ------------------------------------------------------------------------------------------------ #
 
     # -- GRN SECTION --------------------------------------------------------------------------------- #
+    # ------------------------------------------------------------------------------------------------ #
+
+    # -- SPECIES BOUNDS SECTION ---------------------------------------------------------------------- #
     # ------------------------------------------------------------------------------------------------ #
 
     # ok, put stuff in the IR dictionary -

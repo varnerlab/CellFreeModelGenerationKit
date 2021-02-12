@@ -5,11 +5,14 @@ const path_to_package = dirname(pathof(@__MODULE__))
 const ir_master_reaction_table_key = "_master_reaction_table_key"
 const ir_list_of_molecular_species_key = "_list_of_molecular_species_key"
 const ir_list_of_reaction_tags_key = "_list_of_reaction_tags_key"
+const ir_master_species_bounds_table_key = "_master_species_bounds_table_key"
 
 # using statement for external packages -
 using DataFrames
 using CSV
 using Dates
+using Logging
+using WordTokenizers
 
 # include package codes -
 include("./base/Types.jl")
