@@ -217,10 +217,11 @@ function parse_vff_metabolic_section(buffer::Array{String,1};
     end
 end
 
-function parse_vff_species_bounds_section(buffer::Array{String,1})::VLResult
+function parse_vff_species_bounds_section(buffer::Array{String,1}, metabolic_results_tuple::NamedTuple)::VLResult
 
     # initialize -
     permissible_bounds_set = Set{Symbol}()
+    species_bounds_table = Dict{String,Symbol}()
 
     try 
 
@@ -228,6 +229,15 @@ function parse_vff_species_bounds_section(buffer::Array{String,1})::VLResult
         push!(permissible_bounds_set, :SINK)
         push!(permissible_bounds_set, :SOURCE)
         push!(permissible_bounds_set, :UNBOUNDED)
+        push!(permissible_bounds_set, :BOUNDED)
+
+        # grab the metabolic section -
+        molecular_symbol_array = metabolic_results_tuple.molecular_symbol_array
+
+        # ok, first step - put the default, which is bounded -
+        for test_biological_symbol in molecular_symbol_array
+            species_bounds_table[test_biological_symbol] = :BOUNDED
+        end
 
         # extract the species bounds section -
         species_bounds_section_buffer = _extract_section(buffer, "#SPECIES_BOUNDS::START", "#SPECIES_BOUNDS::STOP")
@@ -235,10 +245,32 @@ function parse_vff_species_bounds_section(buffer::Array{String,1})::VLResult
         # process each bounds record -
         for species_bounds_record in species_bounds_section_buffer
             
-            # split -
+            # tokenize -
+            token_array = tokenize(species_bounds_record)
 
+            # if this record is formulated correctly, there will be a biological symbol in the first position, and a bound in the last position -
+            test_biological_symbol = first(token_array)
+            test_bound_type = last(uppercase(token_array))
+
+            # test the first and the last position, do we have these?
+            # check: do we have the biological species?
+            if (in(test_biological_symbol, molecular_symbol_array) == false)
+                error_message = "Cannot classify $(test_biological_symbol). $(test_biological_symbol) is not contained in the molecular_symbol_array"
+                throw(ErrorException(error_message))
+            end
         
+            # check: do we have the correct bound?
+            if (in(Symbol(test_bound_type),permissible_bounds_set) == false)
+                error_message = "Cannot classify $(test_bound_type). $(test_bound_type) is not a member of the bounds set"
+                throw(ErrorException(error_message))
+            end
+
+            # so if we get then we have ok bounds 
+            species_bounds_table[test_biological_symbol] = Symbol(test_bound_type)
         end 
+
+        # return -
+        return VLResult(species_bounds_table)
 
     catch error
         return VLResult(error)
@@ -251,36 +283,47 @@ function parse_vff_model_document(model::VLAbstractModelObject;
     # initialize -
     intermediate_representation_dictionary = Dict{String,Any}()
 
-    # get the path to the vff model -
-    vff_model_file_path = model.path_to_model_file
+    try 
+    
+         # get the path to the vff model -
+        vff_model_file_path = model.path_to_model_file
 
-    # load the vff buffer -
-    vff_file_buffer = read_model_document(vff_model_file_path)
+        # load the vff buffer -
+        vff_file_buffer = read_model_document(vff_model_file_path)
 
-    # -- SEQ SECTION --------------------------------------------------------------------------------- #
-    result = parse_vff_sequence_section(vff_file_buffer)
-    # ------------------------------------------------------------------------------------------------ #
+        # -- SEQ SECTION --------------------------------------------------------------------------------- #
+        result = parse_vff_sequence_section(vff_file_buffer)
+        # ------------------------------------------------------------------------------------------------ #
 
-    # -- METABOLISM SECTION -------------------------------------------------------------------------- #
-    result = parse_vff_metabolic_section(vff_file_buffer; 
-        molecular_callback = molecular_callback, reaction_callback = reaction_callback)
-    if (isa(result.value,Exception) == true)
-        return result
+        # -- METABOLISM SECTION -------------------------------------------------------------------------- #
+        result = parse_vff_metabolic_section(vff_file_buffer; 
+            molecular_callback = molecular_callback, reaction_callback = reaction_callback)
+        if (isa(result.value,Exception) == true)
+            throw(result.value)
+        end
+        metabolic_section_results_tuple = result.value
+        # ------------------------------------------------------------------------------------------------ #
+
+        # -- GRN SECTION --------------------------------------------------------------------------------- #
+        # ------------------------------------------------------------------------------------------------ #
+
+        # -- SPECIES BOUNDS SECTION ---------------------------------------------------------------------- #
+        species_bound_result = parse_vff_species_bounds_section(vff_file_buffer,metabolic_section_results_tuple)
+        if (isa(species_bound_result.value, Exception) == true)
+            throw(species_bound_result.value)
+        end
+        species_bound_table = species_bound_result.value
+        # ------------------------------------------------------------------------------------------------ #
+
+        # ok, put stuff in the IR dictionary -
+        intermediate_representation_dictionary[ir_master_reaction_table_key] = metabolic_section_results_tuple.reaction_table
+        intermediate_representation_dictionary[ir_list_of_molecular_species_key] = metabolic_section_results_tuple.molecular_symbol_array
+        intermediate_representation_dictionary[ir_list_of_reaction_tags_key] = metabolic_section_results_tuple.reaction_tag_array
+        intermediate_representation_dictionary[ir_master_species_bounds_table_key] = species_bound_table
+
+        # return -
+        return VLResult(intermediate_representation_dictionary)
+    catch error
+        throw(error)
     end
-    metabolic_section_results_tuple = result.value
-    # ------------------------------------------------------------------------------------------------ #
-
-    # -- GRN SECTION --------------------------------------------------------------------------------- #
-    # ------------------------------------------------------------------------------------------------ #
-
-    # -- SPECIES BOUNDS SECTION ---------------------------------------------------------------------- #
-    # ------------------------------------------------------------------------------------------------ #
-
-    # ok, put stuff in the IR dictionary -
-    intermediate_representation_dictionary[ir_master_reaction_table_key] = metabolic_section_results_tuple.reaction_table
-    intermediate_representation_dictionary[ir_list_of_molecular_species_key] = metabolic_section_results_tuple.molecular_symbol_array
-    intermediate_representation_dictionary[ir_list_of_reaction_tags_key] = metabolic_section_results_tuple.reaction_tag_array
-
-    # return -
-    return VLResult(intermediate_representation_dictionary)
 end
