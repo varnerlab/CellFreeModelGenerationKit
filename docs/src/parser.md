@@ -1,16 +1,15 @@
-# Methods
 ```@docs
-parse_vff_sequence_section(buffer::Array{String,1})::VLResult
+parse_vff_sequence_section
 ```
 
 ```@docs
-parse_vff_metabolic_section(buffer::Array{String,1})::VLResult
+parse_vff_metabolic_section
 ```
 
 ```@docs
-parse_vff_species_bounds_section(buffer::Array{String,1}, metabolic_results_tuple::NamedTuple)::VLResult
+parse_vff_species_bounds_section
 ```
 
 ```@docs
-parse_vff_model_document(model::VLAbstractModelObject)::VLResult
+parse_vff_model_document
 ```
