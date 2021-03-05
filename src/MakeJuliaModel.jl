@@ -66,12 +66,21 @@ function generate(julia_model_object::VLJuliaModelObject;
         control_file_component = program_component.value
         push!(src_component_set, control_file_component)
 
+        # Generate the stoichiometric_matrix -
+        stm_generation_result = generate_stoichiometric_matrix(ir_dictionary)
+        if (isa(stm_generation_result.value,Exception) == true)
+            throw(stm_generation_result.value)
+        end
+        stoichiometric_matrix = stm_generation_result.value
+        stm_program_component = (matrix=stoichiometric_matrix, filename="Network.dat", component_type=:matrix)
+        push!(src_component_set, stm_program_component)
+
         # dump src and config components to disk -
         _output_path_to_src_distribution_files = joinpath(path_to_output_dir,"src")
         write_program_components_to_disk(_output_path_to_src_distribution_files, src_component_set)
 
-        # Generate the stoichiometric_matrix -
-
+        # let the user know the model has been generated ...
+        @info "Model code generation has completed. Please check: $(path_to_output_dir) for your model files."
 
     catch error
         
@@ -82,7 +91,7 @@ function generate(julia_model_object::VLJuliaModelObject;
         if (isnothing(logger) == false)
             with_logger(logger) do 
                 # generate a back trace -
-                @error "Ooops! we encountered an error" exception=(e, catch_backtrace())
+                @error "Ooops! we encountered an error" exception=(error, catch_backtrace())
             end
         end
     end

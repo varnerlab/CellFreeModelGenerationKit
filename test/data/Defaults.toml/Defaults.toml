@@ -51,10 +51,4 @@ default_tx_control_binding_order=1.0                        # units: dimensionle
 default_tx_control_binding_saturation_constant=10.0         # units: concentration e.g., mmol
 default_tx_background_weight=1e-6                           # units: dimensionless
 default_tx_weight=1.0                                       # units: dimensionless                           
-
-# model type prefixes -
-gene_type_prefix="GENE"                                     # pre-appended to gene symbols
-mRNA_type_prefix="MRNA"                                     # pre-appended to mRNA symbols
-protein_type_prefix="PROTEIN"                               # pre-appended to protein symbols
-tRNA_type_prefix="TRNA"                                     # pre-appended to tRNA symbols
 # ----------------------------------------------------------------------------------- #
