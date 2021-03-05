@@ -1,6 +1,11 @@
 # include the strategy for this language -
 include("./strategy/JuliaStrategy.jl")
 
+"""
+    generate(julia_model_object::VLJuliaModelObject; 
+        intermediate_representation_dictionary::Union{Nothing,Dict{String,Any}} = nothing, 
+        logger::Union{Nothing,SimpleLogger} = nothing)
+"""
 function generate(julia_model_object::VLJuliaModelObject; 
     intermediate_representation_dictionary::Union{Nothing,Dict{String,Any}} = nothing, 
     logger::Union{Nothing,SimpleLogger} = nothing)
@@ -19,7 +24,7 @@ function generate(julia_model_object::VLJuliaModelObject;
             # parse the vff document -
             result = parse_vff_model_document(julia_model_object)
             if (isa(result.value,Exception) == true)
-                rethrow(result.value) # re-throw
+                rethrow(result.value) # TODO: what is the diff between re-throw -vs- throw?
             end
             ir_dictionary = result.value
         end
@@ -65,10 +70,13 @@ function generate(julia_model_object::VLJuliaModelObject;
         _output_path_to_src_distribution_files = joinpath(path_to_output_dir,"src")
         write_program_components_to_disk(_output_path_to_src_distribution_files, src_component_set)
 
+        # Generate the stoichiometric_matrix -
+
+
     catch error
         
         # let the user know that something went wrong, and prompt them to the log file -
-        @info "Model code generation failed before completion. If logging is enabled, check the log file."
+        @info "Model code generation failed before completion. If logging is enabled, please check the log file."
 
         # ok, so if we get an error, log it (if we have a logger), then explode -
         if (isnothing(logger) == false)
