@@ -1,3 +1,7 @@
+"""
+    read_model_document(path_to_file::String; 
+        strip_comments::Bool = true)::Array{String,1}
+"""
 function read_model_document(path_to_file::String; 
     strip_comments::Bool = true)::Array{String,1}
 

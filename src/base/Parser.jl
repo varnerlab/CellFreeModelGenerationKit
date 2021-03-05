@@ -80,6 +80,10 @@ end
 
 # ------------------------------------------------------------------------------------------------ #
 
+# -- PUBLIC FUNCTIONS THAT ARE EXPORTED ---------------------------------------------------------- #
+"""
+    parse_vff_sequence_section(buffer::Array{String,1})::VLResult
+"""
 function parse_vff_sequence_section(buffer::Array{String,1})::VLResult
 
     # initialize -
@@ -97,6 +101,10 @@ function parse_vff_sequence_section(buffer::Array{String,1})::VLResult
 
         # extract the sequence section -
         sequence_section_buffer = _extract_section(buffer, "#TXTL-SEQUENCE::START", "#TXTL-SEQUENCE::STOP")
+        if (isempty(sequence_section_buffer) == true)
+            @warn "Hmmm. No SEQUENCE section was found. That's ok. We'll skip to the next section ..."
+            return VLResult(nothing)
+        end
 
         # make the buffer flat, and then write to tmp_file -
         flat_buffer = ""
@@ -171,12 +179,18 @@ function parse_vff_sequence_section(buffer::Array{String,1})::VLResult
 
 end
 
-function parse_vff_metabolic_section(buffer::Array{String,1}; 
-    molecular_callback::Union{Function,Nothing} = nothing, reaction_callback::Union{Function,Nothing} = nothing)::VLResult
+"""
+    parse_vff_metabolic_section(buffer::Array{String,1})::VLResult
+"""
+function parse_vff_metabolic_section(buffer::Array{String,1})::VLResult
 
     try 
         # extract the metabolic section -
         metabolic_section_buffer = _extract_section(buffer, "#METABOLISM::START", "#METABOLISM::STOP")
+        if (isempty(metabolic_section_buffer) == true)
+            @warn "Hmmm. No METABOLISM section was found. That's ok. We'll skip to the next section ..."
+            return VLResult(nothing)
+        end
 
         # make the buffer flat, and then write to tmp_file -
         flat_buffer = ""
@@ -199,11 +213,11 @@ function parse_vff_metabolic_section(buffer::Array{String,1};
         molecular_symbol_array = _extract_molecular_symbol_array(df_tmp)
 
         # we need to put the symbols in order -
-        molecular_symbol_array = reorder_molecular_symbol_array(molecular_symbol_array; callback = molecular_callback)
+        molecular_symbol_array = reorder_molecular_symbol_array(molecular_symbol_array; callback = nothing)
 
         # put the reactions in order -
         reaction_tag_array = df_tmp[!,:reaction_tag]
-        reaction_tag_array = reorder_reaction_symbol_array(reaction_tag_array; callback = reaction_callback)
+        reaction_tag_array = reorder_reaction_symbol_array(reaction_tag_array; callback = nothing)
 
         # ok, so let's build a NamedTuple and return to the caller =
         results_tuple = (reaction_table=df_tmp, molecular_symbol_array=molecular_symbol_array, reaction_tag_array=reaction_tag_array)
@@ -215,6 +229,9 @@ function parse_vff_metabolic_section(buffer::Array{String,1};
     end
 end
 
+"""
+    parse_vff_species_bounds_section(buffer::Array{String,1}, metabolic_results_tuple::NamedTuple)::VLResult
+"""
 function parse_vff_species_bounds_section(buffer::Array{String,1}, metabolic_results_tuple::NamedTuple)::VLResult
 
     # initialize -
@@ -239,16 +256,20 @@ function parse_vff_species_bounds_section(buffer::Array{String,1}, metabolic_res
 
         # extract the species bounds section -
         species_bounds_section_buffer = _extract_section(buffer, "#SPECIES_BOUNDS::START", "#SPECIES_BOUNDS::STOP")
+        if (isempty(species_bounds_section_buffer) == true)
+            @warn "Hmmm. No SPECIES_BOUNDS section was found. That's ok. We'll skip to the next section ..."
+            return VLResult(nothing)
+        end        
 
         # process each bounds record -
         for species_bounds_record in species_bounds_section_buffer
             
             # tokenize -
-            token_array = tokenize(species_bounds_record)
+            token_array = split(species_bounds_record," ")
 
             # if this record is formulated correctly, there will be a biological symbol in the first position, and a bound in the last position -
             test_biological_symbol = first(token_array)
-            test_bound_type = last(uppercase(token_array))
+            test_bound_type = uppercase(last(token_array))
 
             # test the first and the last position, do we have these?
             # check: do we have the biological species?
@@ -275,8 +296,10 @@ function parse_vff_species_bounds_section(buffer::Array{String,1}, metabolic_res
     end
 end
 
-function parse_vff_model_document(model::VLAbstractModelObject; 
-        molecular_callback::Union{Function,Nothing} = nothing, reaction_callback::Union{Function,Nothing} = nothing)::VLResult
+"""
+    parse_vff_model_document(model::VLAbstractModelObject)::VLResult    
+"""
+function parse_vff_model_document(model::VLAbstractModelObject)::VLResult
 
     # initialize -
     intermediate_representation_dictionary = Dict{String,Any}()
@@ -291,15 +314,14 @@ function parse_vff_model_document(model::VLAbstractModelObject;
 
         # -- SEQ SECTION --------------------------------------------------------------------------------- #
         result = parse_vff_sequence_section(vff_file_buffer)
-        if (ias(result.value, Exception) == true)
-            throw(result.value)
+        if (isa(result.value, Exception) == true)
+            throw(result.value)    
         end
         sequence_data_table = result.value
         # ------------------------------------------------------------------------------------------------ #
 
         # -- METABOLISM SECTION -------------------------------------------------------------------------- #
-        result = parse_vff_metabolic_section(vff_file_buffer; 
-            molecular_callback = molecular_callback, reaction_callback = reaction_callback)
+        result = parse_vff_metabolic_section(vff_file_buffer)
         if (isa(result.value,Exception) == true)
             throw(result.value)
         end
@@ -330,3 +352,4 @@ function parse_vff_model_document(model::VLAbstractModelObject;
         throw(error)
     end
 end
+# ------------------------------------------------------------------------------------------------ #

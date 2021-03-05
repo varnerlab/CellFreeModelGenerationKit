@@ -8,7 +8,8 @@ makedocs(
     ),
     modules = [CellFreeModelGenerationKit],
     pages = [
-    "Home" => "index.md",
+        "Home" => "index.md",
+        "Parser" => "parser.md"
     ],
 )
 

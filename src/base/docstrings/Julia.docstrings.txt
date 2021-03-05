@@ -1,5 +1,0 @@
-#GENERATE-DEFAULT-DATA-DICTIONARY::START
-"""
-    generate_default_data_dictionary()
-"""
-#GENERATE-DEFAULT-DATA-DICTIONARY::STOP

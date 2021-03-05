@@ -2,7 +2,6 @@ function _extract_reaction_phrase_table(phrase::String)::Dict{String,Float64}
 
     # initialize -
     reaction_phrase_table = Dict{String,Float64}()
-    molecular_symbol_array = Array{String,1}()
 
     # compnents -
     if (occursin("+",phrase) == true)
@@ -17,16 +16,46 @@ function _extract_reaction_phrase_table(phrase::String)::Dict{String,Float64}
             # if len(inner_component_array) == 1, then no *
             # if len(inner_component_array) == 2, then we have a st coeff -
             if (length(inner_component_array) == 1)
+
+                # we have a single species -
+                key = string(last(inner_component_array))
+                value = 1.0
+                reaction_phrase_table[key] = value
                 
             elseif (length(inner_component_array) == 2)
             
+                # we have a species w/a coefficient -
+                key = string(last(inner_component_array))
+                value = parse(Float64, first(inner_component_array))
+                reaction_phrase_table[key] = value
             else
-                # error state:
+                # error state -
+                throw(DimensionMismatch("component array larger than 2"))
             end
-
-            push!(molecular_symbol_array, string(last(inner_component_array)))
         end
     else
+
+        # single species, possibly w/* 
+        # split around the * -
+        phrase_component_array = split(phrase,"*")
+        if (length(phrase_component_array) == 1)
+
+            # we have a single species -
+            key = string(last(phrase_component_array))
+            value = 1.0
+            reaction_phrase_table[key] = value
+            
+        elseif (length(phrase_component_array) == 2)
+        
+            # we have a species w/a coefficient -
+            key = string(last(phrase_component_array))
+            value = parse(Float64, first(phrase_component_array))
+            reaction_phrase_table[key] = value
+
+        else
+            # error state -
+            throw(DimensionMismatch("phrase component array larger than 2"))
+        end
     end
     
     # return -
@@ -49,6 +78,8 @@ function _extract_stoichiometric_coefficient(phrase::String, speciesSymbol::Stri
     # return -
     return stoichiometric_coefficient
 end
+
+# == PUBLIC METHODS BELOW HERE ======================================================================================== #
 
 """
     generate_stoichiometric_matrix(intermediate_dictionary::Dict{String,Any})::VLResult
@@ -107,3 +138,5 @@ function generate_stoichiometric_matrix(intermediate_dictionary::Dict{String,Any
         return VLResult(error)
     end
 end
+
+# == PUBLIC METHODS ABOVE HERE ======================================================================================== #
