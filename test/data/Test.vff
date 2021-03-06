@@ -1,9 +1,23 @@
 // ***************************************************************************** //
+#BIOTYPE_PREFIXES::START
+
+// Declare type prefixes -
+g_ is a GENE
+p_ is a PROTEIN
+mRNA_ is a MESSENGER_RNA
+tRNA_ is a TRANSFER_RNA
+regRNA is a REGULATORY_RNA
+
+#BIOTYPE_PREFIXES::STOP
+// ***************************************************************************** //
+
+
+// ***************************************************************************** //
 #TXTL-SEQUENCE::START
 // Sequence record format:
-// {TX|TL},{gene_symbol|protein_symbol},{RNAP_symbol|Ribosome_symbol}::sequence;
+// {gene_symbol|protein_symbol},sequence;
 
-X,cI_ssrA,RX::atgagcacaaaaaagaaaccattaacacaagagcagcttgaggacgcacgtcgccttaaagcaatttatgaaaaaaagaaaaatgaacttggcttatcc
+g_cI-ssrA,atgagcacaaaaaagaaaccattaacacaagagcagcttgaggacgcacgtcgccttaaagcaatttatgaaaaaaagaaaaatgaacttggcttatcc
 caggaatctgtcgcagacaagatggggatggggcagtcaggcgttggtgctttatttaatggcatcaatgcattaaatgcttataacgccgcattgctt
 gcaaaaattctcaaagttagcgttgaagaatttagcccttcaatcgccagagaaatctacgagatgtatgaagcggttagtatgcagccgtcacttaga
 agtgagtatgagtaccctgttttttctcatgttcaggcagggatgttctcacctgagcttagaacctttaccaaaggtgatgcggagagatgggtaagc
@@ -12,7 +26,7 @@ ttaattctcgttgaccctgagcaggctgttgagccaggtgatttctgcatagccagacttgggggtgatgagtttacctt
 agcggtcaggtgtttttacaaccactaaacccacagtacccaatgatcccatgcaatgagagttgttccgttgtggggaaagttatcgctagtcagtgg
 cctgaagagacgtttggctgtgcagcaaacgacgaaaactacgctttagctgcttaa;
 
-L,cI_ssrA,RL::MSTKKKPLTQEQLEDARRLK
+p_cI-ssrA,MSTKKKPLTQEQLEDARRLK
 AIYEKKKNELGLSQESVADK
 MGMGQSGVGALFNGINALNA
 YNAALLAKILKVSVEEFSPS
@@ -27,7 +41,7 @@ SVVGKVIASQWPEETFGCAA
 NDENYALAA;
 
 // -- sigma28 gene and protein ----------------------------------------------- //
-X,s28,RX::atgaattcactctataccgctgaaggtgtaatggataaacactcgctgtggcagcgttatgtcccgctggtgcgtcacgaagcattg
+g_s28,atgaattcactctataccgctgaaggtgtaatggataaacactcgctgtggcagcgttatgtcccgctggtgcgtcacgaagcattg
 cgcctgcaggttcgactgcccgcgagcgtggaacttgacgatctgctacaggcgggcggcattgggttacttaatgccgtcgaacgc
 tatgacgccctacaaggaacggcatttacaacttacgcagtgcagcgtatccgtggcgctatgctggatgaacttcgcagccgtgac
 tgggtgccgcgcagcgtgcgacgcaacgcgcgtgaagtggcacaggcaatagggcaactggagcaggaacttggccgcaacgccacg
@@ -37,7 +51,7 @@ gacagtaatctgcgccagcgggtgatggaagccatcgaaacgttgccggagcgcgaaaaactggtattaaccctctatta
 gagctgaatctcaaagagattggcgcggtgctggaggtcggggaatcgcgggtcagtcagttacacagccaggctattaaacggtta
 cgcactaaactgggtaagttataa;
 
-L,s28,RL::MNSLYTAEGVMDKHSLWQRY
+p_s28,MNSLYTAEGVMDKHSLWQRY
 VPLVRHEALRLQVRLPASVE
 LDDLLQAGGIGLLNAVERYD
 ALQGTAFTTYAVQRIRGAML
@@ -51,7 +65,7 @@ YQEELNLKEIGAVLEVGESR
 VSQLHSQAIKRLRTKLGKL;
 
 // -- deGFP-ssrA gene and protein -------------------------------------------- //
-X,deGFP_ssrA,RX::atggagcttttcactggcgttgttcccatcctggtcgagctggacggcgacgtaaacggccacaagttcagcgtgtccggc
+g_deGFP-ssrA,atggagcttttcactggcgttgttcccatcctggtcgagctggacggcgacgtaaacggccacaagttcagcgtgtccggc
 gagggcgagggcgatgccacctacggcaagctgaccctgaagttcatctgcaccaccggcaagctgcccgtgccctggccc
 accctcgtgaccaccctgacctacggcgtgcagtgcttcagccgctaccccgaccacatgaagcagcacgacttcttcaag
 tccgccatgcccgaaggctacgtccaggagcgcaccatcttcttcaaggacgacggcaactacaagacccgcgccgaggtg
@@ -61,7 +75,7 @@ atccgccacaacatcgaggacggcagcgtgcagctcgccgaccactaccagcagaacacccccatcggcgacggccccgt
 ctgctgcccgacaaccactacctgagcacccagtccgccctgagcaaagaccccaacgagaagcgcgatcacatggtcctg
 ctggagttcgtgaccgccgccgggatcgcagcaaacgacgaaaactacgctttagctgcttaa;
 
-L,deGFP_ssrA,RL::MELFTGVVPILVELDGDVNG
+p_deGFP-ssrA,MELFTGVVPILVELDGDVNG
 HKFSVSGEGEGDATYGKLTL
 KFICTTGKLPVPWPTLVTTL
 TYGVQCFSRYPDHMKQHDFF
@@ -634,6 +648,29 @@ M_co2_e is a SINK
 M_h_e is UNBOUNDED
 
 #SPECIES_BOUNDS::STOP
+// ***************************************************************************** //
+
+// ***************************************************************************** //
+#GRN::START
+
+// formation of s70_RNAP and s28_RNAP -
+p_s70 binds to RNAP and forms s70_RNAP
+p_s28 binds to RNAP and forms s28_RNAP
+
+// P70 promoter TX/TL activity -
+s70_RNAP binds to P70 and activates g_deGFP-ssrA expression to form mRNA_deGFP-ssrA
+mRNA_deGFP-ssrA is translated by RIBOSOME to form p_deGFP_ssrA
+s70_RNAP binds to P70 and activates g_s28 expression to form mRNA_s28
+mRNA_s28 is translated by RIBOSOME to form p_s28
+
+// P28 promoter activity -
+s28_RNAP binds to P28 and activates g_cI-ssrA expression to form mRNA_cI-ssrA
+
+// p_cI-ssrA action -
+p_cI-ssrA binds to P70 and inhibits g_s28 expression
+p_cI-ssrA binds to P70 and inhibits g_deGFP-ssrA expression
+
+#GRN::STOP
 // ***************************************************************************** //
 
 

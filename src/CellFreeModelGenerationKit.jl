@@ -20,6 +20,11 @@ export generate
 # general methods -
 export generate_stoichiometric_matrix
 
+# code strategy methods -
+export build_data_dictionary_program_component
+export build_control_program_component
+export build_kinetics_program_component
+
 # advanced: API call back methods -
 export reorder_reaction_symbol_array
 export reorder_molecular_symbol_array

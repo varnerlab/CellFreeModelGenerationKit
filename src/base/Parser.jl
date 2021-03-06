@@ -89,7 +89,6 @@ function parse_vff_sequence_section(buffer::Array{String,1})::VLResult
     # initialize -
     operation_type_array = Array{Symbol,1}()
     molecular_symbol_array = Array{String,1}()
-    macromolecular_symbol_array = Array{String,1}()
     molecular_species_type_array = Array{Symbol,1}()
     sequence_array = Array{String,1}()
 
@@ -123,64 +122,46 @@ function parse_vff_sequence_section(buffer::Array{String,1})::VLResult
         df_tmp = CSV.read(IOBuffer(flat_buffer), DataFrame; header=false)
 
         # let's create a DataFrame w/the each peice of data in a col -
-        [push!(operation_type_array,Symbol(line)) for line in df_tmp[!,:Column1]]
-        [push!(molecular_symbol_array, line) for line in df_tmp[!,:Column2]]
+        [push!(molecular_symbol_array,line) for line in df_tmp[!,:Column1]]
+        [push!(sequence_array,line) for line in df_tmp[!,:Column2]]
 
         # ok, so we need to do some additional logic for this next bit -
         # what type is the molecular symbol?
-        for operation_type in operation_type_array
-            if (operation_type == :X)
-                push!(molecular_species_type_array,:DNA)
-            else
-                push!(molecular_species_type_array,:PROTEIN)
-            end        
-        end
-
-        # we need to split the {RNAP_symbol|Ribosome_symbol}::sequence -
-        for record in df_tmp[!,:Column3]
+        for sequence_record in sequence_array
             
-            # ok, so we need to split around :: -
-            component_array = split(record,"::")
+            # grab the first element -
+            first_sequence_element = string(first(sequence_record))
 
-            # the first element is the macromolecular_symbol, the second is the sequence -
-            macromolecular_symbol = string(component_array[1])
-            sequence_record = string(component_array[2])
-
-            # push! -
-            push!(macromolecular_symbol_array, macromolecular_symbol)
-            push!(sequence_array, sequence_record)
+            # if this in the dna alphabet?
+            if (in(first_sequence_element, dna_sequence_alphabet) == true)
+                
+                push!(molecular_species_type_array,:DNA)
+            
+            elseif (in(first_sequence_element, protein_sequence_alphabet) == true)
+                
+                push!(molecular_species_type_array,:PROTEIN)
+            else
+                
+                # we don't know what this is ... put type as missing for now 
+                push!(molecular_species_type_array, :UNKOWN)
+            end   
         end
 
         # Finally, add everything to new data frame -
-        new_sequence_df = DataFrame(operation_type=operation_type_array,
+        new_sequence_df = DataFrame(
             sequence_type=molecular_species_type_array,
             molecular_symbol=molecular_symbol_array,
-            macromolecular_symbol=macromolecular_symbol_array,
             sequence=sequence_array)
-
-        # Analysis of sequences -
-        # process the DNA sequence -
-        dna_sequence_df = filter(row->row.sequence_type == :DNA, new_sequence_df)
-        
-        # get dimension of the dna data frame -
-        (number_of_dna_sequences,number_of_cols_dna) = size(dna_sequence_df)
-        for dna_sequence_index = 1:number_of_dna_sequences
-            
-            # ok, get the DNA sequence -
-
-
-        end
 
         # return the new_df -
         return VLResult(new_sequence_df)
     catch error
         return VLResult(error)
     end
-
 end
 
 """
-    parse_vff_metabolic_section(buffer::Array{String,1})::VLResult
+parse_vff_metabolic_section(buffer::Array{String,1})::VLResult
 """
 function parse_vff_metabolic_section(buffer::Array{String,1})::VLResult
 
@@ -230,7 +211,43 @@ function parse_vff_metabolic_section(buffer::Array{String,1})::VLResult
 end
 
 """
-    parse_vff_species_bounds_section(buffer::Array{String,1}, metabolic_results_tuple::NamedTuple)::VLResult
+parse_grn_section(buffer::Array{String,1})::VLResult
+"""
+function parse_vff_grn_section(buffer::Array{String,1})::VLResult
+
+    # initialize -
+    original_record_buffer_dictionary = Dict{Int64,Any}()
+
+    try 
+
+        # get the grn section -
+        grn_section_buffer = _extract_section(buffer, "#GRN::START", "#GRN::STOP")
+        if (isempty(grn_section_buffer) == true)
+            @warn "Hmmm. No GRN section was found. That's ok. We'll skip to the next section ..."
+            return VLResult(nothing)
+        end        
+
+        # initial tokenize by spaces -
+        for (index,grn_record) in enumerate(grn_section_buffer)
+            
+            # split -
+            fragment_array = split(grn_record, " ")
+            
+            # grab -
+            original_record_buffer_dictionary[index] = fragment_array
+        end
+
+        # reduce: 
+        
+        # for now - return nothing 
+        return VLResult(nothing)
+    catch error
+        return VLResult(error)
+    end
+end
+
+"""
+parse_vff_species_bounds_section(buffer::Array{String,1}, metabolic_results_tuple::NamedTuple)::VLResult
 """
 function parse_vff_species_bounds_section(buffer::Array{String,1}, metabolic_results_tuple::NamedTuple)::VLResult
 
@@ -297,7 +314,7 @@ function parse_vff_species_bounds_section(buffer::Array{String,1}, metabolic_res
 end
 
 """
-    parse_vff_model_document(model::VLAbstractModelObject)::VLResult    
+parse_vff_model_document(model::VLAbstractModelObject)::VLResult    
 """
 function parse_vff_model_document(model::VLAbstractModelObject)::VLResult
 
@@ -329,6 +346,7 @@ function parse_vff_model_document(model::VLAbstractModelObject)::VLResult
         # ------------------------------------------------------------------------------------------------ #
 
         # -- GRN SECTION --------------------------------------------------------------------------------- #
+        grn_section_result = parse_vff_grn_section(vff_file_buffer)
         # ------------------------------------------------------------------------------------------------ #
 
         # -- SPECIES BOUNDS SECTION ---------------------------------------------------------------------- #

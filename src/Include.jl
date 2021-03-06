@@ -24,6 +24,7 @@ include("./base/Checks.jl")
 include("./base/Files.jl")
 include("./base/Parser.jl")
 include("./base/Callbacks.jl")
+include("./base/Sequence.jl")
 include("./strategy/General.jl")
 
 # language specific codes -

@@ -47,7 +47,7 @@ function build_data_dictionary_program_component(intermediate_dictionary::Dict{S
         header_buffer = _build_copyright_header_buffer(intermediate_dictionary)
         +(buffer, header_buffer)
 
-        +(buffer,"function generate_default_data_dictionary(")
+        +(buffer,"function generate_default_data_dictionary(;")
         +(buffer,"path_to_biophysical_constants_file::String = \"./src/config/Biophysics.toml\",\n");
         +(buffer,"\tpath_to_ec_file::String = \"./src/config/EC.toml\",\n\tpath_to_control_constants_file::String=\"./src/config/Control.toml\",\n");
         +(buffer,"\tbiophysical_constants_file_parser::Function=build_biophysical_dictionary,\n\tec_constants_file_parser::Function=build_ec_data_dictionary,\n\tcontrol_constants_parser::Function=build_control_constants_dictionary,\n\tvargs...)")
@@ -87,7 +87,7 @@ function build_control_program_component(intermediate_dictionary::Dict{String,An
         +(buffer, header_buffer)
         +(buffer, "\n")
 
-        # TODO: Control logic goes here ...
+        
 
         # collapse -
         flat_buffer = ""
