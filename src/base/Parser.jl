@@ -313,6 +313,36 @@ function parse_vff_species_bounds_section(buffer::Array{String,1}, metabolic_res
     end
 end
 
+function parse_vff_bio_types_section(buffer::Array{String,1})::VLResult
+
+    # initialize -
+    original_record_buffer_dictionary = Dict{Int64,Any}()
+
+    try
+        
+        # load the types section buffer -
+        types_section_buffer = _extract_section(buffer, "BIO-TYPE-PREFIXES::START", "BIO-TYPE-PREFIXES::STOP")
+        if (isempty(types_section_buffer) == true)
+            @warn "Hmmm. No BIO-TYPES-PREFIXES section was found. That's ok. We'll skip to the next section ..."
+            return VLResult(nothing)
+        end        
+        
+        # ok, lets see how this tokenizes -
+        for (index,type_record) in enumerate(types_section_buffer)
+            
+            # tokenize -
+            token_array = tokenize(type_record)
+            
+            # grab -
+            original_record_buffer_dictionary[index] = token_array
+        end
+
+        return VLResult(original_record_buffer_dictionary)
+    catch error
+        return VLResult(error)
+    end
+end
+
 """
 parse_vff_model_document(model::VLAbstractModelObject)::VLResult    
 """
@@ -328,6 +358,11 @@ function parse_vff_model_document(model::VLAbstractModelObject)::VLResult
 
         # load the vff buffer -
         vff_file_buffer = read_model_document(vff_model_file_path)
+
+        # -- TYPES SECTION ------------------------------------------------------------------------------- #
+        types_parse_result = parse_vff_bio_types_section(vff_file_buffer)
+
+        # ------------------------------------------------------------------------------------------------ #
 
         # -- SEQ SECTION --------------------------------------------------------------------------------- #
         result = parse_vff_sequence_section(vff_file_buffer)

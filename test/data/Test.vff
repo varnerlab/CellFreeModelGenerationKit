@@ -1,14 +1,14 @@
 // ***************************************************************************** //
-#BIOTYPE_PREFIXES::START
+#BIO-TYPE-PREFIXES::START
 
 // Declare type prefixes -
-g_ is a GENE
-p_ is a PROTEIN
-mRNA_ is a MESSENGER_RNA
-tRNA_ is a TRANSFER_RNA
-regRNA is a REGULATORY_RNA
+g is a GENE type
+p is a PROTEIN type
+mRNA is a MESSENGER-RNA type
+tRNA is a TRANSFER-RNA type
+regRNA is a REGULATORY-RNA type
 
-#BIOTYPE_PREFIXES::STOP
+#BIO-TYPE-PREFIXES::STOP
 // ***************************************************************************** //
 
 
