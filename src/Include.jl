@@ -29,3 +29,9 @@ include("./strategy/General.jl")
 
 # language specific codes -
 include("MakeJuliaModel.jl")
+
+# Minerva lite -
+include("./minerva/Types.jl")
+include("./minerva/Scanner.jl")
+include("./minerva/Parser.jl")
+include("./minerva/grammar/type_assignment_grammar.jl")

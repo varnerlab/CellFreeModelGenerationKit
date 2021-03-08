@@ -46,7 +46,11 @@ abstract type BOUND <: AbstractTokenType end
 abstract type UNBOUND <: AbstractTokenType end
 
 # type that we will build -
-struct CFMGToken <: AbstractToken
+struct MinervaToken <: AbstractToken
   lexeme::String
   type::AbstractTokenType
+end
+
+struct MinervaSentence
+    sentence::Array{MinervaToken,1}
 end
