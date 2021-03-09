@@ -1,5 +1,6 @@
 # where is the package installed?
-const path_to_package = dirname(pathof(@__MODULE__))
+const _PATH_TO_SRC = dirname(pathof(@__MODULE__))
+const _PATH_TO_DATABASE = joinpath(_PATH_TO_SRC, "database")
 
 # IR dictionary keys -
 const ir_master_reaction_table_key = "_master_reaction_table_key"
@@ -15,6 +16,7 @@ using Dates
 using Logging
 using WordTokenizers
 using DelimitedFiles
+using SQLite
 
 # include package codes -
 include("./base/Types.jl")
@@ -34,4 +36,5 @@ include("MakeJuliaModel.jl")
 include("./minerva/Types.jl")
 include("./minerva/Scanner.jl")
 include("./minerva/Parser.jl")
+include("./minerva/Database.jl")
 include("./minerva/grammar/type_assignment_grammar.jl")

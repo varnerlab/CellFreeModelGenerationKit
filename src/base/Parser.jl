@@ -234,13 +234,11 @@ function parse_vff_grn_section(buffer::Array{String,1})::VLResult
             fragment_array = split(grn_record, " ")
             
             # grab -
-            original_record_buffer_dictionary[index] = fragment_array
+            original_record_buffer_dictionary[index] = string.(fragment_array)
         end
-
-        # reduce: 
-        
-        # for now - return nothing 
-        return VLResult(nothing)
+    
+        # for now - the original buffer 
+        return VLResult(original_record_buffer_dictionary)
     catch error
         return VLResult(error)
     end

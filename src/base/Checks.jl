@@ -34,7 +34,7 @@ function is_dir_path_ok(path_to_file::String)::VLResult
     return VLResult(nothing)
 end
 
-function check_result_struct(result::VLResult; logger::Union{Nothing,SimpleLogger} = nothing)::(Union{Nothing,T} where T<:Any)
+function check(result::VLResult; logger::Union{Nothing,SimpleLogger} = nothing)::(Union{Nothing,T} where T<:Any)
 
     # ok, so check, do we have an error object?
     # Yes: log the error if we have a logger, then throw the error. 
