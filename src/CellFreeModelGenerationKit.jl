@@ -39,7 +39,7 @@ export ir_master_species_bounds_table_key
 export ir_sequence_section_table_key
 
 # export Minerva -
-export scan
+export grn_scan
 export check
 
 end # module
