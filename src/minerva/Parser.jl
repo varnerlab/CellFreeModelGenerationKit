@@ -2,7 +2,7 @@
 # ------------------------------------------------------------------------------------------------------------- #
 
 # -- PUBLIC METHODS ------------------------------------------------------------------------------------------- #
-function grn_parse(records::Dict{Int64,Array{MinervaToken,1}}; 
+function minerva_parser(records::Dict{Int64,Array{MinervaToken,1}}, parseFunction::Function;
     logger::Union{Nothing,SimpleLogger} = nothing)::VLResult
 
     # initialize -
@@ -14,6 +14,6 @@ function grn_parse(records::Dict{Int64,Array{MinervaToken,1}};
     end
 end
 
-function grn_parse(record::Array{MinervaToken,1})::VLResult
+function grn_parse_function(record::Array{MinervaToken,1})::VLResult
 end
 # ------------------------------------------------------------------------------------------------------------- #

@@ -1,4 +1,4 @@
-function scanner(records::Dict{Int64,Any}, scanFunction::Function; logger::Union{Nothing,SimpleLogger} = nothing)::VLResult
+function minerva_scanner(records::Dict{Int64,Any}, scanFunction::Function; logger::Union{Nothing,SimpleLogger} = nothing)::VLResult
     
     # initialize -
     scanned_records_dictionary = Dict{Int64,Array{MinervaToken,1}}()

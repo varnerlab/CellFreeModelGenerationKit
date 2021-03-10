@@ -39,7 +39,8 @@ export ir_master_species_bounds_table_key
 export ir_sequence_section_table_key
 
 # export Minerva -
-export scanner
+export minerva_parser
+export minderva_scanner
 export grn_scan_function
 export biological_type_assignment_scan_function
 export bound_type_assignment_scan_function
