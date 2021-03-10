@@ -7,6 +7,7 @@ p is a PROTEIN type
 mRNA is a MESSENGER-RNA type
 tRNA is a TRANSFER-RNA type
 regRNA is a REGULATORY-RNA type
+M is a METABOLITE type
 
 #BIO-TYPE-PREFIXES::STOP
 // ***************************************************************************** //

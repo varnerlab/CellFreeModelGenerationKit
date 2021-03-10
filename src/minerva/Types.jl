@@ -4,6 +4,9 @@ abstract type AbstractToken end
 # Biological symbol is *any* biological symbol
 struct BIOLOGICAL_SYMBOL <: AbstractTokenType end
 
+# Biological type prefix is *any* type prefix
+struct BIOLOGICAL_TYPE_PREFIX <: AbstractTokenType end
+
 # Keywords used in the various sentences -
 struct LPAREN <: AbstractTokenType end
 struct RPAREN <: AbstractTokenType end

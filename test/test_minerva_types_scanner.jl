@@ -11,5 +11,5 @@ result = parse_vff_bio_types_section(file_buffer)
 original_record_buffer_dictionary = check(result)
 
 # now, lets scan this mofo -
-scan_result = scan(original_record_buffer_dictionary)
+scan_result = scanner(original_record_buffer_dictionary, biological_type_assignment_scan_function)
 cannonical_reduced_array = check(scan_result)
