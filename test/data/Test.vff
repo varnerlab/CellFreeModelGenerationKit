@@ -654,12 +654,14 @@ M_h_e is UNBOUNDED
 // ***************************************************************************** //
 #GRN::START
 
-// What are my promoters and genes in the circuit?
+// What are my promoters, genes and polymerases in the circuit?
 P70 is a promoter
 P28 is a promoter
 g_deGFP-ssrA is a gene
 g_cI-ssrA is a gene
 g_s28 is a gene
+RNAP is a RNA_POLYMERASE_II_SYMBOL
+RIBOSOME is a RIBOSOME_SYMBOL
 
 // formation of s70_RNAP and s28_RNAP -
 p_s70 binds to RNAP and forms s70_RNAP

@@ -30,6 +30,8 @@ struct tRNA_TYPE_SYMBOL <: AbstractTokenType end
 struct regRNA_TYPE_SYMBOL <: AbstractTokenType end
 struct PROTEIN_TYPE_SYMBOL <: AbstractTokenType end
 struct METABOLITE_TYPE_SYMBOL <: AbstractTokenType end
+struct RNA_POLYMERASE_II_SYMBOL <: AbstractTokenType end
+struct RIBOSOME_SYMBOL <: AbstractTokenType end
 struct TYPE <: AbstractTokenType end
 struct OF <: AbstractTokenType end
 struct SEMICOLON <: AbstractTokenType end

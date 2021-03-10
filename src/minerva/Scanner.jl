@@ -202,7 +202,9 @@ function grn_scan_function(record::Array{String,1}, synonym_dictionary::Union{No
     token_type_dictionary[string(hash("at"))] = MinervaToken("at",AT())
     token_type_dictionary[string(hash("in"))] = MinervaToken("in",IN())    
     token_type_dictionary[string(hash("promoter"))] = MinervaToken("promoter",PROMOTER())  
-    token_type_dictionary[string(hash("gene"))] = MinervaToken("gene",GENE())  
+    token_type_dictionary[string(hash("gene"))] = MinervaToken("gene",GENE()) 
+    token_type_dictionary[string(hash("RNA_POLYMERASE_II_SYMBOL"))] = MinervaToken("RNAP_SYMBOL",RNA_POLYMERASE_II_SYMBOL())  
+    token_type_dictionary[string(hash("RIBOSOME_SYMBOL"))] = MinervaToken("RIBOSOME_SYMBOL",RIBOSOME_SYMBOL())
 
     # token_type_dictionary[string(hash("GENE_TYPE_SYMBOL"))] = MinervaToken("GENE_SYMBOL",GENE_SYMBOL())
     # token_type_dictionary[string(hash("mRNA_TYPE_SYMBOL"))] = MinervaToken("mRNA_SYMBOL",mRNA_SYMBOL())
@@ -251,6 +253,18 @@ function grn_scan_function(record::Array{String,1}, synonym_dictionary::Union{No
 
         # return -
         return VLResult(canonical_token_array)
+    catch error
+        return VLResult(error)
+    end
+end
+
+function consolidate(scanned_records_dictionary::Dict{Int64,Array{MinervaToken,1}}, consildationFunction::Function; 
+    logger::Union{Nothing,SimpleLogger} = nothing)::VLResult
+
+    # initialize -
+    
+
+    try 
     catch error
         return VLResult(error)
     end
