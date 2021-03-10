@@ -33,15 +33,15 @@ struct METABOLITE_TYPE_SYMBOL <: AbstractTokenType end
 struct TYPE <: AbstractTokenType end
 struct OF <: AbstractTokenType end
 struct SEMICOLON <: AbstractTokenType end
-struct INHIBIT <: AbstractTokenType end
-struct REPRESS <: AbstractTokenType end
-struct INDUCE <: AbstractTokenType end
-struct ACTIVATE <: AbstractTokenType end
 struct PHOSPHORYLATE <: AbstractTokenType end
 struct DEPHOSPHORYLATE <: AbstractTokenType end
 struct COMPLEX <: AbstractTokenType end
 struct FORM <: AbstractTokenType end
 struct AT <: AbstractTokenType end
+struct PROMOTER <: AbstractTokenType end
+struct GENE <: AbstractTokenType end
+struct POSITIVE <: AbstractTokenType end
+struct NEGATIVE <: AbstractTokenType end
 struct UNKNOWN <: AbstractTokenType end
 
 # Bounds types -

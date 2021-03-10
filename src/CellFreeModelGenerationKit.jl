@@ -40,7 +40,7 @@ export ir_sequence_section_table_key
 
 # export Minerva -
 export minerva_parser
-export minderva_scanner
+export minerva_scanner
 export grn_scan_function
 export biological_type_assignment_scan_function
 export bound_type_assignment_scan_function

@@ -11,5 +11,5 @@ result = parse_vff_grn_section(file_buffer)
 original_record_buffer_dictionary = check(result)
 
 # now, lets scan this mofo -
-scan_result = grn_scan(original_record_buffer_dictionary)
+scan_result = minerva_scanner(original_record_buffer_dictionary, grn_scan_function)
 cannonical_reduced_array = check(scan_result)
