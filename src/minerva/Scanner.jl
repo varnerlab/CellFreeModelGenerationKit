@@ -257,15 +257,3 @@ function grn_scan_function(record::Array{String,1}, synonym_dictionary::Union{No
         return VLResult(error)
     end
 end
-
-function consolidate(scanned_records_dictionary::Dict{Int64,Array{MinervaToken,1}}, consildationFunction::Function; 
-    logger::Union{Nothing,SimpleLogger} = nothing)::VLResult
-
-    # initialize -
-    
-
-    try 
-    catch error
-        return VLResult(error)
-    end
-end

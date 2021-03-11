@@ -236,9 +236,13 @@ function parse_vff_grn_section(buffer::Array{String,1})::VLResult
             # grab -
             original_record_buffer_dictionary[index] = string.(fragment_array)
         end
-    
-        # for now - the original buffer 
-        return VLResult(original_record_buffer_dictionary)
+
+        # scan the original record buffer -> to produce the cannonical_reduced_array
+        scan_result = minerva_scanner(original_record_buffer_dictionary, grn_scan_function)
+        cannonical_reduced_array = check(scan_result)
+
+        # for now - the cannonical_reduced_array -
+        return VLResult(cannonical_reduced_array)
     catch error
         return VLResult(error)
     end
@@ -250,24 +254,9 @@ parse_vff_species_bounds_section(buffer::Array{String,1}, metabolic_results_tupl
 function parse_vff_species_bounds_section(buffer::Array{String,1}, metabolic_results_tuple::NamedTuple)::VLResult
 
     # initialize -
-    permissible_bounds_set = Set{Symbol}()
-    species_bounds_table = Dict{String,Symbol}()
+    # ...
 
     try 
-
-        # fill in the permissible_bounds_set -
-        push!(permissible_bounds_set, :SINK)
-        push!(permissible_bounds_set, :SOURCE)
-        push!(permissible_bounds_set, :UNBOUNDED)
-        push!(permissible_bounds_set, :BOUNDED)
-
-        # grab the metabolic section -
-        molecular_symbol_array = metabolic_results_tuple.molecular_symbol_array
-
-        # ok, first step - put the default, which is bounded -
-        for test_biological_symbol in molecular_symbol_array
-            species_bounds_table[test_biological_symbol] = :BOUNDED
-        end
 
         # extract the species bounds section -
         species_bounds_section_buffer = _extract_section(buffer, "#SPECIES_BOUNDS::START", "#SPECIES_BOUNDS::STOP")
@@ -276,41 +265,30 @@ function parse_vff_species_bounds_section(buffer::Array{String,1}, metabolic_res
             return VLResult(nothing)
         end        
 
-        # process each bounds record -
-        for species_bounds_record in species_bounds_section_buffer
+        # initial tokenize by spaces -
+        for (index, species_bound_record) in enumerate(species_bounds_section_buffer)
             
-            # tokenize -
-            token_array = split(species_bounds_record," ")
+            # split -
+            fragment_array = split(species_bound_record, " ")
+            
+            # grab -
+            original_record_buffer_dictionary[index] = string.(fragment_array)
+        end
 
-            # if this record is formulated correctly, there will be a biological symbol in the first position, and a bound in the last position -
-            test_biological_symbol = first(token_array)
-            test_bound_type = uppercase(last(token_array))
+        # scan the original record buffer -> to produce the cannonical_reduced_array
+        scan_result = minerva_scanner(original_record_buffer_dictionary, bound_type_assignment_scan_function)
+        cannonical_reduced_array = check(scan_result)
 
-            # test the first and the last position, do we have these?
-            # check: do we have the biological species?
-            if (in(test_biological_symbol, molecular_symbol_array) == false)
-                error_message = "Cannot classify $(test_biological_symbol). $(test_biological_symbol) is not contained in the molecular_symbol_array"
-                throw(ErrorException(error_message))
-            end
-        
-            # check: do we have the correct bound?
-            if (in(Symbol(test_bound_type),permissible_bounds_set) == false)
-                error_message = "Cannot classify $(test_bound_type). $(test_bound_type) is not a member of the bounds set"
-                throw(ErrorException(error_message))
-            end
-
-            # so if we get then we have ok bounds 
-            species_bounds_table[test_biological_symbol] = Symbol(test_bound_type)
-        end 
-
-        # return -
-        return VLResult(species_bounds_table)
-
+        # for now - the cannonical_reduced_array -
+        return VLResult(cannonical_reduced_array)
     catch error
         return VLResult(error)
     end
 end
 
+"""
+parse_vff_bio_types_section(buffer::Array{String,1})::VLResult
+"""
 function parse_vff_bio_types_section(buffer::Array{String,1})::VLResult
 
     # initialize -
@@ -335,7 +313,12 @@ function parse_vff_bio_types_section(buffer::Array{String,1})::VLResult
             original_record_buffer_dictionary[index] = token_array
         end
 
-        return VLResult(original_record_buffer_dictionary)
+         # scan the original record buffer -> to produce the cannonical_reduced_array
+         scan_result = minerva_scanner(original_record_buffer_dictionary, biological_type_assignment_scan_function)
+         cannonical_reduced_array = check(scan_result)
+ 
+         # for now - the cannonical_reduced_array -
+         return VLResult(cannonical_reduced_array)
     catch error
         return VLResult(error)
     end
@@ -380,21 +363,19 @@ function parse_vff_model_document(model::VLAbstractModelObject)::VLResult
 
         # -- GRN SECTION --------------------------------------------------------------------------------- #
         grn_section_result = parse_vff_grn_section(vff_file_buffer)
+        grn_scanned_dictionary = check(grn_section_result)
         # ------------------------------------------------------------------------------------------------ #
 
         # -- SPECIES BOUNDS SECTION ---------------------------------------------------------------------- #
         species_bound_result = parse_vff_species_bounds_section(vff_file_buffer,metabolic_section_results_tuple)
-        if (isa(species_bound_result.value, Exception) == true)
-            throw(species_bound_result.value)
-        end
-        species_bound_table = species_bound_result.value
+        species_scanner_dictionary = check(species_bound_result)
         # ------------------------------------------------------------------------------------------------ #
 
         # ok, put stuff in the IR dictionary -
         intermediate_representation_dictionary[ir_master_reaction_table_key] = metabolic_section_results_tuple.reaction_table
         intermediate_representation_dictionary[ir_list_of_molecular_species_key] = metabolic_section_results_tuple.molecular_symbol_array
         intermediate_representation_dictionary[ir_list_of_reaction_tags_key] = metabolic_section_results_tuple.reaction_tag_array
-        intermediate_representation_dictionary[ir_master_species_bounds_table_key] = species_bound_table
+        intermediate_representation_dictionary[ir_master_species_bounds_table_key] = species_scanner_dictionary
         intermediate_representation_dictionary[ir_sequence_section_table_key] = sequence_data_table
 
         # return -
