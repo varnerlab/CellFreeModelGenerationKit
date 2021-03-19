@@ -205,7 +205,7 @@ function generate_default_project_file(path_to_project_file::String)::VLResult
 
     # Transfer distrubtion files to the output -> these files are shared between model types -
     # TODO: replace w/joinpath?
-    transfer_distribution_files("$(path_to_package)/distribution/julia", "$(path_to_project_file)",".toml")
+    transfer_distribution_files("$(_PATH_TO_SRC)/distribution/julia", "$(path_to_project_file)",".toml")
 
     # ok, so return nothing if everything worked ...
     return VLResult(nothing)

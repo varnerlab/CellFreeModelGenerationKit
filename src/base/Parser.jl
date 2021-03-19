@@ -254,7 +254,7 @@ end
 function parse_vff_species_bounds_section(buffer::Array{String,1}, metabolic_results_tuple::NamedTuple)::VLResult
 
     # initialize -
-    # ...
+    original_record_buffer_dictionary = Dict{Int64,Any}()
 
     try 
 

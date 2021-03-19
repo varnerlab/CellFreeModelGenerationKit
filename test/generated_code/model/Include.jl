@@ -24,6 +24,7 @@
 
 # where are we installed?
 _PATH_TO_ROOT = pwd()
+_PATH_TO_SRC = joinpath(_PATH_TO_ROOT,"src")
 
 # import pkg -
 import Pkg
@@ -41,13 +42,21 @@ using DataFrames
 using Logging
 
 # load my model files -
-include("./src/Checks.jl")
-include("./src/Types.jl")
-include("./src/Data.jl")
-include("./src/Kinetics.jl")
-include("./src/Control.jl")
-include("./src/Solver.jl")
-include("./src/Utility.jl")
-include("./src/Flux.jl")
-include("./src/Constraints.jl")
+my_model_files_array = [
+    "Checks.jl"         ;
+    "Types.jl"          ;
+    "Data.jl"           ;
+    "Kinetics.jl"       ;
+    "Control.jl"        ;
+    "Solver.jl"         ;
+    "Utility.jl"        ;
+    "Flux.jl"           ;
+    "Constraints.jl"    ;    
+]
+
+# process my model files -
+for file_name in my_model_files_array
+    path_to_my_file = joinpath(_PATH_TO_SRC,file_name)
+    include("$(path_to_my_file)")
+end
 

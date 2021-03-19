@@ -43,18 +43,67 @@ function build_data_dictionary_program_component(intermediate_dictionary::Dict{S
 
     try 
 
+        # get the reaction table -
+        master_reaction_table = intermediate_dictionary[ir_master_reaction_table_key]
+
+        # how many reactions do we have?
+        (number_of_reactions, number_of_fields) = size(master_reaction_table)
+        
         # build the header -
         header_buffer = _build_copyright_header_buffer(intermediate_dictionary)
         +(buffer, header_buffer)
 
-        +(buffer,"function generate_default_data_dictionary(;")
-        +(buffer,"path_to_biophysical_constants_file::String = \"./src/config/Biophysics.toml\",\n");
-        +(buffer,"\tpath_to_ec_file::String = \"./src/config/EC.toml\",\n\tpath_to_control_constants_file::String=\"./src/config/Control.toml\",\n");
-        +(buffer,"\tbiophysical_constants_file_parser::Function=build_biophysical_dictionary,\n\tec_constants_file_parser::Function=build_ec_data_dictionary,\n\tcontrol_constants_parser::Function=build_control_constants_dictionary,\n\tvargs...)")
-        +(buffer,"::Dict{String,Any}\n")
+        +(buffer,"function generate_default_data_dictionary()\n")
         +(buffer,"\n")
-        +(buffer,"\t# initialize - \n")
+        +(buffer,"\t# initialize data storage - \n")
         +(buffer,"\tdata_dictionary = Dict{String,Any}()\n")
+        +(buffer,"\n")
+        +(buffer,"\t# load the stoichiometric_matrix - \n")
+        +(buffer,"\tstoichiometric_matrix = readdlm(\"Network.dat\")\n")
+        +(buffer,"\t(number_of_species, number_of_reactions) = size(stoichiometric_matrix)\n")
+        +(buffer,"\n")
+        +(buffer,"\t# initialize objective coefficient array - \n")
+        +(buffer,"\tobjective_coefficient_array = zeros(number_of_reactions)\n")
+        +(buffer,"\n")
+        +(buffer,"\t# setup the flux bounds array - \n")
+        +(buffer,"\tflux_bounds_array = [\n")
+        
+        # populate the flux bounds -
+        for reaction_index = 1:number_of_reactions
+
+            # what is the reaction tag?
+            reaction_tag = master_reaction_table[reaction_index, "reaction_tag"]
+
+            # initialize new record -
+            new_bounds_record_string = ""
+
+            # is this reaction reversible?
+            is_reaction_reversible = master_reaction_table[reaction_index,"is_reaction_reversible"]
+            if (is_reaction_reversible == true)
+                new_bounds_record_string="\t\tDEFAULT_LOWER_BOUND DEFAULT_UPPER_BOUND\t;\t#\t$(reaction_index)\t$(reaction_tag)\n"
+            else
+                new_bounds_record_string="\t\t0.0 DEFAULT_UPPER_BOUND\t;\t#\t$(reaction_index)\t$(reaction_tag)\n"
+            end
+            
+            # push -
+            +(buffer, new_bounds_record_string)
+        end
+
+        +(buffer,"\n")
+        +(buffer,"\t# setup the species bounds array - \n")
+        
+
+        +(buffer,"\t]\n")
+        +(buffer,"\n")
+        +(buffer,"\t# ----------------------------------------------------------------------------------- # \n")
+        +(buffer,"\tdata_dictionary[\"flux_bounds_array\"] = flux_bounds_array\n")
+        +(buffer,"\tdata_dictionary[\"stoichiometric_matrix\"] = stoichiometric_matrix\n")
+        +(buffer,"\tdata_dictionary[\"objective_coefficient_array\"] = objective_coefficient_array\n")
+        +(buffer,"\tdata_dictionary[\"number_of_species\"] = number_of_species\n")
+        +(buffer,"\tdata_dictionary[\"number_of_reactions\"] = number_of_reactions\n")
+        +(buffer,"\t# ----------------------------------------------------------------------------------- # \n")
+        +(buffer,"\n")
+        +(buffer,"\t# return -\n")
         +(buffer,"\treturn data_dictionary\n")
         +(buffer,"end\n")
 

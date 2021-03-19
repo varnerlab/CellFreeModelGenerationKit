@@ -33,13 +33,13 @@ function generate(julia_model_object::VLJuliaModelObject;
         path_to_output_dir = julia_model_object.path_to_output_dir
 
         # Transfer distrubtion jl files to the output -> these files are shared between model types
-        transfer_distribution_files("$(path_to_package)/distribution/julia/src", "$(path_to_output_dir)/src",".jl")
+        transfer_distribution_files("$(_PATH_TO_SRC)/distribution/julia/src", "$(path_to_output_dir)/src",".jl")
 
         # Transfer root jl files -> these files are moved to the root dir of the file
-        transfer_distribution_files("$(path_to_package)/distribution/julia/root", "$(path_to_output_dir)",".jl")
+        transfer_distribution_files("$(_PATH_TO_SRC)/distribution/julia/root", "$(path_to_output_dir)",".jl")
 
         # Transfer root toml files -> these files are moved to the root dir of the model
-        transfer_distribution_files("$(path_to_package)/distribution/julia/root", "$(path_to_output_dir)",".toml")
+        transfer_distribution_files("$(_PATH_TO_SRC)/distribution/julia/root", "$(path_to_output_dir)",".toml")
 
         # start building the custom program components -
         # Build the Data.jl data dictionary -
