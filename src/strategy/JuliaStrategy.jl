@@ -91,6 +91,8 @@ function build_data_dictionary_program_component(intermediate_dictionary::Dict{S
 
         +(buffer,"\n")
         +(buffer,"\t# setup the species bounds array - \n")
+        +(buffer,"\tspecies_bounds_array = zeros(number_of_species,2)\n")
+        
         
 
         +(buffer,"\t]\n")
@@ -99,6 +101,7 @@ function build_data_dictionary_program_component(intermediate_dictionary::Dict{S
         +(buffer,"\tdata_dictionary[\"flux_bounds_array\"] = flux_bounds_array\n")
         +(buffer,"\tdata_dictionary[\"stoichiometric_matrix\"] = stoichiometric_matrix\n")
         +(buffer,"\tdata_dictionary[\"objective_coefficient_array\"] = objective_coefficient_array\n")
+        +(buffer,"\tdata_dictionary[\"species_bounds_array\"] = species_bounds_array\n")
         +(buffer,"\tdata_dictionary[\"number_of_species\"] = number_of_species\n")
         +(buffer,"\tdata_dictionary[\"number_of_reactions\"] = number_of_reactions\n")
         +(buffer,"\t# ----------------------------------------------------------------------------------- # \n")

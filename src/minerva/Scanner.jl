@@ -43,6 +43,10 @@ function bound_type_assignment_scan_function(record::Array{String,1}, synonym_di
     token_type_dictionary[string(hash("SINK"))] = MinervaToken("sink",SINK())
     token_type_dictionary[string(hash("BOUND"))] = MinervaToken("bound",BOUND())
     token_type_dictionary[string(hash("UNBOUND"))] = MinervaToken("unbound",UNBOUND())
+    token_type_dictionary[string(hash("source"))] = MinervaToken("source",SOURCE())
+    token_type_dictionary[string(hash("sink"))] = MinervaToken("sink",SINK())
+    token_type_dictionary[string(hash("bound"))] = MinervaToken("bound",BOUND())
+    token_type_dictionary[string(hash("unbound"))] = MinervaToken("unbound",UNBOUND())
     token_type_dictionary[string(hash("is"))] = MinervaToken("is",IS())
     token_type_dictionary[string(hash("a"))] = MinervaToken("a",A())
     token_type_dictionary[string(hash("type"))] = MinervaToken("TYPE",TYPE())
@@ -80,10 +84,13 @@ function bound_type_assignment_scan_function(record::Array{String,1}, synonym_di
                 token_item = token_type_dictionary[test_key]
                 push!(canonical_token_array, token_item)
             else
-                minerva_token = MinervaToken(item_to_classify, UNKNOWN())
+                minerva_token = MinervaToken(item_to_classify, BIOLOGICAL_SYMBOL())
                 push!(canonical_token_array,minerva_token)
             end
         end 
+
+        # finally - add a SEMICOLON -
+        push!(canonical_token_array, MinervaToken(";", SEMICOLON()))
         
         # return -
         return VLResult(canonical_token_array)
@@ -117,6 +124,8 @@ function biological_type_assignment_scan_function(record::Array{String,1}, synon
     token_type_dictionary[string(hash("REGULATORY-RNA"))] = MinervaToken("REGULATORY-RNA",regRNA_TYPE_SYMBOL())
     token_type_dictionary[string(hash("PROTEIN"))] = MinervaToken("PROTEIN",PROTEIN_TYPE_SYMBOL())
     token_type_dictionary[string(hash("METABOLITE"))] = MinervaToken("METABOLITE",METABOLITE_TYPE_SYMBOL())
+    token_type_dictionary[string(hash("RNA_POLYMERASE_II_SYMBOL"))] = MinervaToken("RNAP_SYMBOL",RNA_POLYMERASE_II_SYMBOL())  
+    token_type_dictionary[string(hash("RIBOSOME_SYMBOL"))] = MinervaToken("RIBOSOME_SYMBOL",RIBOSOME_SYMBOL())
 
     try 
 
@@ -154,7 +163,10 @@ function biological_type_assignment_scan_function(record::Array{String,1}, synon
                 minerva_token = MinervaToken(item_to_classify, BIOLOGICAL_TYPE_PREFIX())
                 push!(canonical_token_array,minerva_token)
             end
-        end 
+        end
+        
+        # finally - add a SEMICOLON -
+        push!(canonical_token_array, MinervaToken(";", SEMICOLON()))
         
         # return -
         return VLResult(canonical_token_array)
@@ -250,6 +262,9 @@ function grn_scan_function(record::Array{String,1}, synonym_dictionary::Union{No
                 push!(canonical_token_array,minerva_token)
             end
         end
+
+        # finally - add a SEMICOLON -
+        push!(canonical_token_array, MinervaToken(";", SEMICOLON()))
 
         # return -
         return VLResult(canonical_token_array)

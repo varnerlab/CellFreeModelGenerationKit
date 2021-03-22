@@ -34,7 +34,6 @@ struct RNA_POLYMERASE_II_SYMBOL <: AbstractTokenType end
 struct RIBOSOME_SYMBOL <: AbstractTokenType end
 struct TYPE <: AbstractTokenType end
 struct OF <: AbstractTokenType end
-struct SEMICOLON <: AbstractTokenType end
 struct PHOSPHORYLATE <: AbstractTokenType end
 struct DEPHOSPHORYLATE <: AbstractTokenType end
 struct COMPLEX <: AbstractTokenType end
@@ -51,6 +50,9 @@ struct SOURCE <: AbstractTokenType end
 struct SINK <: AbstractTokenType end
 struct BOUND <: AbstractTokenType end
 struct UNBOUND <: AbstractTokenType end
+
+# endpoint -
+struct SEMICOLON <: AbstractTokenType end
 
 # type that we will build -
 struct MinervaToken <: AbstractToken

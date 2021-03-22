@@ -34,3 +34,7 @@ translate,translation
 translated,translation
 bounded,bound
 unbounded,unbound
+BOUNDED,bound
+UNBOUNDED,unbound
+SOURCE,source
+SINK,sink

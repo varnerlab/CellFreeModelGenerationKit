@@ -14,6 +14,19 @@ function minerva_parser(records::Dict{Int64,Array{MinervaToken,1}}, parseFunctio
     end
 end
 
-function grn_parse_function(record::Array{MinervaToken,1})::VLResult
+function grn_record_parse_parser(sentence::Array{MinervaToken,1})::VLResult
+    return VLResult(nothing)
+end
+
+function species_bounds_record_parser(sentence::Array{MinervaToken,1})::VLResult
+
+    try 
+    
+        # ok - here we go -
+
+
+    catch error
+        return VLResult(error)
+    end
 end
 # ------------------------------------------------------------------------------------------------------------- #
