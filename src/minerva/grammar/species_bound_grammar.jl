@@ -49,7 +49,10 @@ function _is_token_species_bound(sentence::Array{MinervaToken,1})::VLResult
     
     # grab the a token -
     next_token = pop!(sentence)
-
+    if (isa(next_token.type, IS) == true)
+        
+    elseif (isa())
+    end
 end
 
 function _type_token_species_bound(sentence::Array{MinervaToken,1})::VLResult
