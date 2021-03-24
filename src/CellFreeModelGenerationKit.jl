@@ -11,6 +11,7 @@ export parse_vff_model_document
 export parse_vff_metabolic_section
 export parse_vff_sequence_section
 export parse_vff_bio_types_section
+export parse_vff_species_bounds_section
 export parse_vff_grn_section
 export read_model_document
 export generate_default_project
@@ -41,9 +42,10 @@ export ir_sequence_section_table_key
 # export Minerva -
 export minerva_parser
 export minerva_scanner
-export grn_scan_function
-export biological_type_assignment_scan_function
-export bound_type_assignment_scan_function
+export minerva_grn_scan_function
+export minerva_biological_type_assignment_scan_function
+export minerva_bound_type_assignment_scan_function
+export minerva_species_bounds_record_parser
 export check
 
 end # module

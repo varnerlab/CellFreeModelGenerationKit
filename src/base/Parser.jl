@@ -238,7 +238,7 @@ function parse_vff_grn_section(buffer::Array{String,1})::VLResult
         end
 
         # scan the original record buffer -> to produce the cannonical_reduced_array
-        scan_result = minerva_scanner(original_record_buffer_dictionary, grn_scan_function)
+        scan_result = minerva_scanner(original_record_buffer_dictionary, minerva_grn_scan_function)
         cannonical_reduced_array = check(scan_result)
 
         # for now - the cannonical_reduced_array -
@@ -251,7 +251,7 @@ end
 """
     parse_vff_species_bounds_section(buffer::Array{String,1}, metabolic_results_tuple::NamedTuple)::VLResult
 """
-function parse_vff_species_bounds_section(buffer::Array{String,1}, metabolic_results_tuple::NamedTuple)::VLResult
+function parse_vff_species_bounds_section(buffer::Array{String,1})::VLResult
 
     # initialize -
     original_record_buffer_dictionary = Dict{Int64,Any}()
@@ -276,7 +276,7 @@ function parse_vff_species_bounds_section(buffer::Array{String,1}, metabolic_res
         end
 
         # scan the original record buffer -> to produce the cannonical_reduced_array
-        scan_result = minerva_scanner(original_record_buffer_dictionary, bound_type_assignment_scan_function)
+        scan_result = minerva_scanner(original_record_buffer_dictionary, minerva_bound_type_assignment_scan_function)
         cannonical_reduced_array = check(scan_result)
 
         # for now - the cannonical_reduced_array -
@@ -367,7 +367,7 @@ function parse_vff_model_document(model::VLAbstractModelObject)::VLResult
         # ------------------------------------------------------------------------------------------------ #
 
         # -- SPECIES BOUNDS SECTION ---------------------------------------------------------------------- #
-        species_bound_result = parse_vff_species_bounds_section(vff_file_buffer,metabolic_section_results_tuple)
+        species_bound_result = parse_vff_species_bounds_section(vff_file_buffer)
         species_scanner_dictionary = check(species_bound_result)
         # ------------------------------------------------------------------------------------------------ #
 

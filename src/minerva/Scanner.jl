@@ -1,4 +1,4 @@
-function minerva_scanner(records::Dict{Int64,Any}, scanFunction::Function; logger::Union{Nothing,SimpleLogger} = nothing)::VLResult
+function minerva_scanner(records::Dict{Int,Any}, scanFunction::Function; logger::Union{Nothing,SimpleLogger} = nothing)::VLResult
     
     # initialize -
     scanned_records_dictionary = Dict{Int64,Array{MinervaToken,1}}()
@@ -28,7 +28,7 @@ function minerva_scanner(records::Dict{Int64,Any}, scanFunction::Function; logge
 
 end
 
-function bound_type_assignment_scan_function(record::Array{String,1}, synonym_dictionary::Union{Nothing,Dict{String,String}} = nothing; 
+function minerva_bound_type_assignment_scan_function(record::Array{String,1}, synonym_dictionary::Union{Nothing,Dict{String,String}} = nothing; 
     logger::Union{Nothing,SimpleLogger})::VLResult
 
     # initialize -
@@ -100,7 +100,7 @@ function bound_type_assignment_scan_function(record::Array{String,1}, synonym_di
     end
 end
 
-function biological_type_assignment_scan_function(record::Array{String,1}, synonym_dictionary::Union{Nothing,Dict{String,String}} = nothing; 
+function minerva_biological_type_assignment_scan_function(record::Array{String,1}, synonym_dictionary::Union{Nothing,Dict{String,String}} = nothing; 
     logger::Union{Nothing,SimpleLogger})::VLResult
 
     # initialize -
@@ -176,7 +176,7 @@ function biological_type_assignment_scan_function(record::Array{String,1}, synon
 
 end
 
-function grn_scan_function(record::Array{String,1}, synonym_dictionary::Union{Nothing,Dict{String,String}} = nothing; 
+function minerva_grn_scan_function(record::Array{String,1}, synonym_dictionary::Union{Nothing,Dict{String,String}} = nothing; 
     logger::Union{Nothing,SimpleLogger})::VLResult
 
     # initialize -

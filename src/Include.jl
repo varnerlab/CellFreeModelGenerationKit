@@ -18,8 +18,21 @@ using WordTokenizers
 using DelimitedFiles
 using SQLite
 
+
+
 # include package codes -
 include("./base/Types.jl")
+
+
+# Minerva lite -
+include("./minerva/Types.jl")
+include("./minerva/Scanner.jl")
+include("./minerva/Parser.jl")
+include("./minerva/Database.jl")
+include("./minerva/grammar/type_assignment_grammar.jl")
+include("./minerva/grammar/species_bound_grammar.jl")
+
+
 include("./base/Extensions.jl")
 include("./base/Factory.jl")
 include("./base/Checks.jl")
@@ -31,11 +44,3 @@ include("./strategy/General.jl")
 
 # language specific codes -
 include("MakeJuliaModel.jl")
-
-# Minerva lite -
-include("./minerva/Types.jl")
-include("./minerva/Scanner.jl")
-include("./minerva/Parser.jl")
-include("./minerva/Database.jl")
-include("./minerva/grammar/type_assignment_grammar.jl")
-include("./minerva/grammar/species_bound_grammar.jl")
