@@ -279,6 +279,9 @@ function parse_vff_species_bounds_section(buffer::Array{String,1})::VLResult
         scan_result = minerva_scanner(original_record_buffer_dictionary, minerva_bound_type_assignment_scan_function)
         cannonical_reduced_array = check(scan_result)
 
+        # parse the cannonical records -
+        
+
         # for now - the cannonical_reduced_array -
         return VLResult(cannonical_reduced_array)
     catch error
