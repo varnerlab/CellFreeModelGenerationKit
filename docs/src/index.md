@@ -10,7 +10,7 @@
 ```@index
 ```
 
-```@autodoc
+```@autodocs
 ```
 
 ```@docs
