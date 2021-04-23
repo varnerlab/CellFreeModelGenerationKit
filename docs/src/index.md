@@ -2,11 +2,6 @@
 
 A package for building cell-free model code in Julia.
 
-```@contents
-```
-```@index
-```
-
 ## General methods
 ```@docs
 generate
