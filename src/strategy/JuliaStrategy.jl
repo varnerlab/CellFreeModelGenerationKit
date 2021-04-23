@@ -35,6 +35,9 @@ function _build_copyright_header_buffer(intermediate_dictionary::Dict{String,Any
 end
 
 # -- PUBLIC FUNCTIONS EXPORTED --------------------------------------------------------------------- #
+"""
+    build_data_dictionary_program_component(intermediate_dictionary::Dict{String,Any})::VLResult
+"""
 function build_data_dictionary_program_component(intermediate_dictionary::Dict{String,Any})::VLResult
 
     # initialize -
@@ -125,7 +128,10 @@ function build_data_dictionary_program_component(intermediate_dictionary::Dict{S
     end
 end
 
-# function to build Control.jl 
+# function to build Control.jl
+"""
+    build_control_program_component(intermediate_dictionary::Dict{String,Any})::VLResult
+"""
 function build_control_program_component(intermediate_dictionary::Dict{String,Any})::VLResult
 
     # initialize -
@@ -157,6 +163,9 @@ function build_control_program_component(intermediate_dictionary::Dict{String,An
 end
 
 # function to build Kinetics.jl
+"""
+    build_kinetics_program_component(intermediate_dictionary::Dict{String,Any})::VLResult
+"""
 function build_kinetics_program_component(intermediate_dictionary::Dict{String,Any})::VLResult
 
     # initialize -
