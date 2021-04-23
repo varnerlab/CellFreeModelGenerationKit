@@ -7,6 +7,7 @@ makedocs(
         prettyurls = get(ENV, "CI", nothing) == "true"
     ),
     modules = [CellFreeModelGenerationKit],
+    doctest = true,
     pages = [
         "Home" => "index.md",
         "Parser" => "parser.md"
