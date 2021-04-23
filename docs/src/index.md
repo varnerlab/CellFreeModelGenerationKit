@@ -14,5 +14,4 @@
 Modules = [CellFreeModelGenerationKit]
 ```
 
-```@docs
-```
+
