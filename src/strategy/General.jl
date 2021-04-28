@@ -83,6 +83,15 @@ end
 
 """
     generate_stoichiometric_matrix(intermediate_dictionary::Dict{String,Any})::VLResult
+    
+    Generate a stoichiometric matrix based on the biochemical model reaction network.
+
+    Input arguments:
+    `intermediate_dictionary::Dict{String,Any}` - data dictionary containing the master reaction table and molecular species participating in the reactions.
+
+    Output arguments:
+    `VLResult::VLResult` - concrete data type holding the generated stoichiometric matrix.
+
 """
 function generate_stoichiometric_matrix(intermediate_dictionary::Dict{String,Any})::VLResult
 
