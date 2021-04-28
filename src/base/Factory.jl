@@ -1,6 +1,18 @@
 """
     build_julia_model_object(path_to_model_file::String, path_to_output_dir::String; 
         defaults_file_name::String="Defaults.toml", model_type::Symbol=:static)::VLResult
+
+    Build a static or dynamic data object in Julia language. If a TOML file with default parameter values is not provided by the user, a `Defaults.toml` file is generated automatically. Additionally, the user can edit the generated `Defaults.toml` file with their own values. After generating code, if a directory already exists at the user specified location, it can be deleted or backed-up before new code is written based on user input.
+
+    Input arguments:
+    `path_to_model_file::String` - user-specified path to read the Network.vff file from as well as the Defaults.toml file (if it already exists)
+    `path_to_output_dir::String` - path to where generated code will be written
+    `defaults_file_name::String` - name of the TOML file with default parameter values (optional).
+    `model_type::Symbol` - type of model to generate (static/ dynamic) (optional).
+
+    Output arguments:
+    `model_object::VLResult{VLJuliaModelObject}` - abstract Julia data object holding information for generating model code.
+
 """
 function build_julia_model_object(path_to_model_file::String, path_to_output_dir::String; 
     defaults_file_name::String="Defaults.toml", model_type::Symbol=:static)::VLResult
