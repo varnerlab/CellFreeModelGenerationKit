@@ -37,6 +37,15 @@ end
 # -- PUBLIC FUNCTIONS EXPORTED --------------------------------------------------------------------- #
 """
     build_data_dictionary_program_component(intermediate_dictionary::Dict{String,Any})::VLResult
+
+    Generate Data.jl. Data.jl includes a method to build a default data dictionary. This dictionary will contain information about the model system along with default bounds useful for flux balance analysis.
+
+    Input arguments:
+    `intermediate_dictionary::Dict{String,Any}` - data dictionary containing the master reaction table and molecular species participating in the reactions.
+
+    Output arguments:
+    `VLResult::VLResult` - concrete data type holding the data dictionary.
+
 """
 function build_data_dictionary_program_component(intermediate_dictionary::Dict{String,Any})::VLResult
 
@@ -130,7 +139,16 @@ end
 
 # function to build Control.jl
 """
-    build_control_program_component(intermediate_dictionary::Dict{String,Any})::VLResult
+    Function: build_control_program_component(intermediate_dictionary::Dict{String,Any})::VLResult
+    
+    Generate Control.jl. Control.jl includes methods to calculate transcription and translation control functions at time t.
+
+    Input arguments:
+    `intermediate_dictionary::Dict{String,Any}` - data dictionary containing the master reaction table and molecular species participating in the reactions.
+
+    Output arguments:
+    `VLResult::VLResult` - concrete data type holding control values for each rate.
+
 """
 function build_control_program_component(intermediate_dictionary::Dict{String,Any})::VLResult
 
@@ -164,7 +182,16 @@ end
 
 # function to build Kinetics.jl
 """
-    build_kinetics_program_component(intermediate_dictionary::Dict{String,Any})::VLResult
+    build_kinetics_dictionary_program_component(intermediate_dictionary::Dict{String,Any})::VLResult
+    
+    Generate Kinetics.jl. Kinetics.jl includes methods to calculate transcription and translation rates based on biophysical model parameters.
+
+    Input arguments:
+    `intermediate_dictionary::Dict{String,Any}` - data dictionary containing the master reaction table and molecular species participating in the reactions.
+
+    Output arguments:
+    `VLResult::VLResult` - concrete data type holding all rates.
+
 """
 function build_kinetics_program_component(intermediate_dictionary::Dict{String,Any})::VLResult
 
