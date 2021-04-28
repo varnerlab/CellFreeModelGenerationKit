@@ -1,62 +1,28 @@
-# CellFreeModelGenerationKit.jl
+## CellFreeModelGenerationKit.jl
 
-A package for building cell-free model code in Julia.
+A package for building cell-free models in [Julia language](9https://julialang.org). The purpose of this package is to generate model code for performing constraint-based modeling like flux balance anlaysis (FBA).
 
-## General methods
-```@docs
-generate
-```
-```@docs
-generate_default_project_file
-```
-```@docs
-generate_stoichiometric_matrix
-```
-```@docs
-build_julia_model_object
-```
-```@docs
-read_model_document
+## Getting Started: Installation and Requirements
+
+``CellFreeModelGenerationKit.jl`` is open source, available under a MIT software license. You can download this repository as a zip file, clone or pull it by using the command (from the command-line):
+
+```@example
+$ git clone https://github.com/varnerlab/CFMG.git
 ```
 
-## Code strategy methods
-```@docs
-build_data_dictionary_program_component
-```
-```@docs
-build_control_program_component
-```
-```@docs
-build_kinetics_program_component
+``CellFreeModelGenerationKit.jl`` is organized as a Julia package which can be installed in the ``package mode`` of Julia.
+
+Open the [Julia REPL](https://docs.julialang.org/en/v1/stdlib/REPL/index.html) and enter the ``package mode`` using the ``]`` key. Then, at the prompt enter:
+
+```@example
+(@v1.5) pkg> add https://github.com/varnerlab/CFMG.git
 ```
 
-## Parser methods
-```@docs
-parse_vff_model_document
-```
-```@docs
-parse_vff_metabolic_section
-```
-```@docs
-parse_vff_sequence_section
-```
-```@docs
-parse_vff_bio_types_section
-```
-```@docs
-parse_vff_species_bounds_section
-```
-```@docs
-parse_vff_grn_section
-```
+This will install the ``CellFreeModelGenerationKit.jl`` package and the other required packages. ``CellFreeModelGenerationKit.jl`` requires Julia 1.5.x and above.
 
-## Other Methods
-```@docs
-reorder_molecular_symbol_array
+There are several other packages that are required to run the model. However, these should be installed automatically the first time you run your code. The linear programming problem is solved using the [GLPK solver](https://juliapackages.com/p/glpk), which is freely available for a variety of platforms. The following dependencies are installed: [DataFrames](https://dataframes.juliadata.org/stable/), [CSV](https://csv.juliadata.org/stable/), [Dates](https://docs.julialang.org/en/v1/stdlib/Dates/), [Logging](https://docs.julialang.org/en/v1/stdlib/Logging/), [WordTokenizers](https://github.com/JuliaText/WordTokenizers.jl), [DelimitedFiles](https://docs.julialang.org/en/v1/stdlib/DelimitedFiles/) and [SQLite](https://juliadatabases.org/SQLite.jl/stable/).
+
+## Methods
+
+```@autodocs
 ```
-```@docs
-reorder_reaction_symbol_array
-```
-
-
-
