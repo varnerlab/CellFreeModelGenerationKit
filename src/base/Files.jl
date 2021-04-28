@@ -1,6 +1,16 @@
 """
     read_model_document(path_to_file::String; 
-        strip_comments::Bool = true)::Array{String,1}
+            strip_comments::Bool = true)::Array{String,1}
+    
+    Read each line of the Network.vff input file and extract contents of the file. Comments in the file (beginning by `//` symbol) are excluded by default, which can be overridden by the user.
+
+    Input arguments:
+    `path_to_file::String` - user-specified path where the Network.vff input file can be found and parsed
+    `strip_comments::Bool` - if true, comment lines (beginning by ‘//’ symbol) are excluded by the parser (optional).
+
+    Output arguments:
+    `buffer::Array{String,1}` - single array holding information extracted from the Network.vff file.
+
 """
 function read_model_document(path_to_file::String; 
     strip_comments::Bool = true)::Array{String,1}
@@ -189,12 +199,15 @@ end
 
 
 """
-    generate_default_project(path_to_project_dir::String)
+    generate_default_project(path_to_project_dir::String)::VLResult
 
     Generates a default project structure which contains an empty model file and Defaults.toml file.
 
-    Inputs:
-    path_to_project_dir = path to where you want model code to be generated
+    Input arguments:
+    `path_to_project_file::String` - path to where you want model code to be generated
+
+    Output arguments:
+    None
 """
 function generate_default_project_file(path_to_project_file::String)::VLResult
     
