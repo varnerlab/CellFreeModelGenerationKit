@@ -10,6 +10,8 @@ makedocs(
     doctest = true,
     pages = [
         "Home" => "index.md",
+        "Model Generation" => "model_generation.md",
+        "Model Files" => "generated_files.md",
         "Parser" => "parser.md"
     ],
 )
