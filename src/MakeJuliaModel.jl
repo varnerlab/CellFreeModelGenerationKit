@@ -3,8 +3,18 @@ include("./strategy/JuliaStrategy.jl")
 
 """
     generate(julia_model_object::VLJuliaModelObject; 
-        intermediate_representation_dictionary::Union{Nothing,Dict{String,Any}} = nothing, 
-        logger::Union{Nothing,SimpleLogger} = nothing)
+    intermediate_representation_dictionary::Union{Nothing,Dict{String,Any}} = nothing, 
+    logger::Union{Nothing,SimpleLogger} = nothing)
+
+    Generate model code from a Julia data object and write generated code to the user-defined output directory.
+
+    Input arguments:
+    `julia_model_object::VLJuliaModelObject` - abstract data object for generating model code in Julia language.
+    `intermediate_representation_dictionary::Union{Nothing,Dict{String,Any}}` - an intermediate data dictionary for building model code (optional).
+    `logger::Union{Nothing,SimpleLogger}` - logger to log information during the code generation process (optional).
+
+    Output arguments:
+    None
 """
 function generate(julia_model_object::VLJuliaModelObject; 
     intermediate_representation_dictionary::Union{Nothing,Dict{String,Any}} = nothing, 
