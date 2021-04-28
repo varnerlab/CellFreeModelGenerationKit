@@ -1,6 +1,6 @@
 ## VFF File Structure
 
-``CellFreeModelGenerationKit.jl`` transforms a structured text file into cell free model code. ``CellFreeModelGenerationKit.jl`` text files consist of delimited record types organized into five sections BIO-TYPE-PREFIXES, TXTL-SEQUENCE, METABOLISM, SPECIES_BOUNDS and GRN. Lines beginning with ``//`` are excluded by default. This can be modified by passing ``strip_comments = false`` to the ``read_model_document`` method.
+`CellFreeModelGenerationKit.jl` transforms a structured text file into cell free model code. `CellFreeModelGenerationKit.jl` text files consist of delimited record types organized into five sections BIO-TYPE-PREFIXES, TXTL-SEQUENCE, METABOLISM, SPECIES-BOUNDS and GRN. Lines beginning with `//` are comments which are excluded by default. This can be modified by passing `strip_comments = false` to the `read_model_document` method.
 
 ### BIO-TYPE-PREFIXES section
 
@@ -158,7 +158,7 @@ p_cI-ssrA binds to P70 and inhibits g_deGFP-ssrA expression
 
 ## Generating Model Code
 
-To generate cell free model code, first load the ``CellFreeModelGenerationKit.jl`` package, then build a Julia model object from the REPL using the command ``build_julia_model_object``.
+To generate cell free model code, first load the `CellFreeModelGenerationKit.jl` package, then build a Julia model object from the REPL using the command `build_julia_model_object`.
 
 ```@docs
 build_julia_model_object
@@ -171,9 +171,9 @@ julia> build_result = build_julia_model_object(path_to_test_metabolism_file, pat
 julia> julia_model_object = build_result.value
 ```
 
-The build_julia_model_object reads the model file and a defaults TOML file (if it exists) at the user specified path. If a defaults file is not provided by the user, a ``Defaults.toml`` file is generated. Additionally, the user can modify the contents of ``Defaults.toml``. 
+The `build_julia_model_object` reads the model file and a defaults TOML file (if it exists) at the user specified path. If a defaults file is not provided by the user, a `Defaults.toml` file is generated. Additionally, the user can modify the contents of `Defaults.toml`. 
 
-For writing generated code, if a directory already exists at the user specified location, it can be backed-up before new code is written (based on prompted user input). After building a Julia model object, issue the command ``generate`` from the REPL.
+For writing generated code, if a directory already exists at the user specified location, it can be backed-up before new code is written (based on prompted user input). After building a Julia model object, issue the command `generate` from the REPL.
 
 ```@docs
 generate
