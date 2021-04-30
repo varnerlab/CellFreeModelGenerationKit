@@ -12,6 +12,7 @@ makedocs(
         "Home" => "index.md",
         "Model Generation" => "model_generation.md",
         "Model Files" => "generated_files.md",
+        "VFF format" => "vffformat.md",
         "Parser" => "parser.md"
     ],
 )
