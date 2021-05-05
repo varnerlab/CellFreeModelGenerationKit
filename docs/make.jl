@@ -10,9 +10,9 @@ makedocs(
     doctest = true,
     pages = [
         "Home" => "index.md",
-        "Model Generation" => "model_generation.md",
-        "Model Files" => "generated_files.md",
-        "VFF format" => "vffformat.md",
+        "Generation" => "model_generation.md",
+        "Files" => "generated_files.md",
+        "VFF" => "vffformat.md",
         "Parser" => "parser.md"
     ],
 )

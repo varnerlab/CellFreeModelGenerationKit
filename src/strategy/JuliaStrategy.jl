@@ -65,20 +65,21 @@ function build_data_dictionary_program_component(intermediate_dictionary::Dict{S
         header_buffer = _build_copyright_header_buffer(intermediate_dictionary)
         +(buffer, header_buffer)
 
-        +(buffer,"function generate_default_data_dictionary()\n")
+        +(buffer,"function generate_default_data_dictionary()::Union{Dict{String,Any},Exception}\n")
         +(buffer,"\n")
         +(buffer,"\t# initialize data storage - \n")
         +(buffer,"\tdata_dictionary = Dict{String,Any}()\n")
         +(buffer,"\n")
-        +(buffer,"\t# load the stoichiometric_matrix - \n")
-        +(buffer,"\tstoichiometric_matrix = readdlm(\"Network.dat\")\n")
-        +(buffer,"\t(number_of_species, number_of_reactions) = size(stoichiometric_matrix)\n")
+        +(buffer,"\ttry\n")
+        +(buffer,"\t\t# load the stoichiometric_matrix - \n")
+        +(buffer,"\t\tstoichiometric_matrix = readdlm(\"Network.dat\")\n")
+        +(buffer,"\t\t(number_of_species, number_of_reactions) = size(stoichiometric_matrix)\n")
         +(buffer,"\n")
-        +(buffer,"\t# initialize objective coefficient array - \n")
-        +(buffer,"\tobjective_coefficient_array = zeros(number_of_reactions)\n")
+        +(buffer,"\t\t# initialize objective coefficient array - \n")
+        +(buffer,"\t\tobjective_coefficient_array = zeros(number_of_reactions)\n")
         +(buffer,"\n")
-        +(buffer,"\t# setup the flux bounds array - \n")
-        +(buffer,"\tflux_bounds_array = [\n")
+        +(buffer,"\t\t# setup the flux bounds array - \n")
+        +(buffer,"\t\tflux_bounds_array = [\n")
         
         # populate the flux bounds -
         for reaction_index = 1:number_of_reactions
@@ -92,36 +93,38 @@ function build_data_dictionary_program_component(intermediate_dictionary::Dict{S
             # is this reaction reversible?
             is_reaction_reversible = master_reaction_table[reaction_index,"is_reaction_reversible"]
             if (is_reaction_reversible == true)
-                new_bounds_record_string="\t\tDEFAULT_LOWER_BOUND DEFAULT_UPPER_BOUND\t;\t#\t$(reaction_index)\t$(reaction_tag)\n"
+                new_bounds_record_string="\t\t\tDEFAULT_LOWER_BOUND DEFAULT_UPPER_BOUND\t;\t#\t$(reaction_index)\t$(reaction_tag)\n"
             else
-                new_bounds_record_string="\t\t0.0 DEFAULT_UPPER_BOUND\t;\t#\t$(reaction_index)\t$(reaction_tag)\n"
+                new_bounds_record_string="\t\t\t0.0 DEFAULT_UPPER_BOUND\t;\t#\t$(reaction_index)\t$(reaction_tag)\n"
             end
             
             # push -
             +(buffer, new_bounds_record_string)
         end
-
+        +(buffer,"]", prefix="\t\t",suffix="\n")
         +(buffer,"\n")
-        +(buffer,"\t# setup the species bounds array - \n")
-        +(buffer,"\tspecies_bounds_array = zeros(number_of_species,2)\n")
+
+        +(buffer,"\t\t# setup the species bounds array - \n")
+        +(buffer,"\t\tspecies_bounds_array = zeros(number_of_species,2)\n")
         
+        +(buffer,"\n")
+        +(buffer,"\t\t# ----------------------------------------------------------------------------------- # \n")
+        +(buffer,"\t\tdata_dictionary[\"flux_bounds_array\"] = flux_bounds_array\n")
+        +(buffer,"\t\tdata_dictionary[\"stoichiometric_matrix\"] = stoichiometric_matrix\n")
+        +(buffer,"\t\tdata_dictionary[\"objective_coefficient_array\"] = objective_coefficient_array\n")
+        +(buffer,"\t\tdata_dictionary[\"species_bounds_array\"] = species_bounds_array\n")
+        +(buffer,"\t\tdata_dictionary[\"number_of_species\"] = number_of_species\n")
+        +(buffer,"\t\tdata_dictionary[\"number_of_reactions\"] = number_of_reactions\n")
+        +(buffer,"\t\t# ----------------------------------------------------------------------------------- # \n")
+        +(buffer,"\n")
+        +(buffer,"\t\t# return -\n")
+        +(buffer,"\t\treturn data_dictionary\n")
+        +(buffer,"\tcatch error\n")
+        +(buffer,"\t\trethrow(error)\n")
+        +(buffer,"\tend\n")  
+        +(buffer,"end",prefix="",suffix="\n")      
         
-
-        +(buffer,"\t]\n")
-        +(buffer,"\n")
-        +(buffer,"\t# ----------------------------------------------------------------------------------- # \n")
-        +(buffer,"\tdata_dictionary[\"flux_bounds_array\"] = flux_bounds_array\n")
-        +(buffer,"\tdata_dictionary[\"stoichiometric_matrix\"] = stoichiometric_matrix\n")
-        +(buffer,"\tdata_dictionary[\"objective_coefficient_array\"] = objective_coefficient_array\n")
-        +(buffer,"\tdata_dictionary[\"species_bounds_array\"] = species_bounds_array\n")
-        +(buffer,"\tdata_dictionary[\"number_of_species\"] = number_of_species\n")
-        +(buffer,"\tdata_dictionary[\"number_of_reactions\"] = number_of_reactions\n")
-        +(buffer,"\t# ----------------------------------------------------------------------------------- # \n")
-        +(buffer,"\n")
-        +(buffer,"\t# return -\n")
-        +(buffer,"\treturn data_dictionary\n")
-        +(buffer,"end\n")
-
+    
         # collapse -
         flat_buffer = ""
         [flat_buffer *= line for line in buffer]

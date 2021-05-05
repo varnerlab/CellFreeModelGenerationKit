@@ -201,13 +201,13 @@ end
 """
     generate_default_project(path_to_project_dir::String)::VLResult
 
-    Generates a default project structure which contains an empty model file and Defaults.toml file.
+Generates a default project structure which contains an empty model file and Defaults.toml file.
 
-    Input arguments:
-    `path_to_project_file::String` - path to where you want model code to be generated
+Input arguments:
+`path_to_project_file::String` - path to where you want model code to be generated
 
-    Output arguments:
-    None
+Output arguments:
+None
 """
 function generate_default_project_file(path_to_project_file::String)::VLResult
     

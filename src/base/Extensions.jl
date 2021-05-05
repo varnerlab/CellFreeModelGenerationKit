@@ -1,7 +1,24 @@
 import Base.+
 
-function +(buffer::Array{String,1},content::String)
-    push!(buffer,content)
+
+function +(buffer::Array{String,1}, content::String; 
+    prefix::Union{String,Nothing}=nothing,suffix::Union{String,Nothing}=nothing)
+    
+    # create a new content line -
+    new_line = content
+    
+    # prefix -
+    if (prefix !== nothing)
+        new_line = prefix*new_line
+    end
+
+    # suffix -
+    if (suffix !== nothing)
+        new_line = new_line*suffix
+    end
+    
+    # cache -
+    push!(buffer,new_line)
 end
 
 function +(buffer::Array{String,1}, content_array::Array{String,1}; padding::Union{String,Nothing}=nothing)

@@ -84,13 +84,13 @@ end
 """
     parse_vff_sequence_section(buffer::Array{String,1})::VLResult
     
-    Parse contents of the sequence section in the model file and extract amino acid and nucleotide sequences for protein and DNA, respectively. The sequence section is written between the tags #TXTL-SEQUENCE::START and #TXTL-SEQUENCE::STOP.
+Parse contents of the sequence section in the model file and extract amino acid and nucleotide sequences for protein and DNA, respectively. The sequence section is written between the tags #TXTL-SEQUENCE::START and #TXTL-SEQUENCE::STOP.
 
-    Input arguments:
-    `buffer::Array{String,1}` - 1-D array holding information extracted from the model file.
+Input arguments:
+`buffer::Array{String,1}` - 1-D array holding information extracted from the model file.
 
-    Output arguments:
-    `VLResult::VLResult` - concrete type holding protein and DNA sequence information.
+Output arguments:
+`VLResult::VLResult` - concrete type holding protein and DNA sequence information.
 
 """
 function parse_vff_sequence_section(buffer::Array{String,1})::VLResult
@@ -172,14 +172,13 @@ end
 """
     parse_vff_metabolic_section(buffer::Array{String,1})::VLResult
 
-    Parse contents of the metabolic section in the model file and extract all biochemical reactions and molecular species involved in the metabolic network. The metabolic section is written between the tags #METABOLISM::START and #METABOLISM::STOP.
+Parse contents of the metabolic section in the model file and extract all biochemical reactions and molecular species involved in the metabolic network. The metabolic section is written between the tags #METABOLISM::START and #METABOLISM::STOP.
 
-    Input arguments:
-    `buffer::Array{String,1}` - single array holding information extracted from the model file.
+Input arguments:
+`buffer::Array{String,1}` - single array holding information extracted from the model file.
 
-    Output arguments:
-    `VLResult::VLResult` - concrete type holding information on reactions and species involved in metabolism.
-
+Output arguments:
+`VLResult::VLResult` - concrete type holding information on reactions and species involved in metabolism.
 """
 function parse_vff_metabolic_section(buffer::Array{String,1})::VLResult
 
@@ -231,14 +230,13 @@ end
 """
     parse_vff_grn_section(buffer::Array{String,1})::VLResult
     
-    Parse contents of the GRN section in the model file and extract information contained on gene regulation. The GRN section is written between the tags #GRN::START and #GRN::STOP. 
+Parse contents of the GRN section in the model file and extract information contained on gene regulation. The GRN section is written between the tags #GRN::START and #GRN::STOP. 
 
-    Input arguments:
-    `buffer::Array{String,1}` - 1-D array holding information extracted from the model file.
+Input arguments:
+`buffer::Array{String,1}` - 1-D array holding information extracted from the model file.
 
-    Output arguments:
-    `VLResult::VLResult` - concrete type holding information on the gene regulatory network.
-
+Output arguments:
+`VLResult::VLResult` - concrete type holding information on the gene regulatory network.
 """
 function parse_vff_grn_section(buffer::Array{String,1})::VLResult
 
@@ -278,14 +276,13 @@ end
 """
     parse_vff_species_bounds_section(buffer::Array{String,1}, metabolic_results_tuple::NamedTuple)::VLResult
     
-    Parse contents of the model file and extract information on species bounds. The species bounds section is written between the tags #SPECIES_BOUNDS::START and #SPECIES_BOUNDS::STOP.
+Parse contents of the model file and extract information on species bounds. The species bounds section is written between the tags #SPECIES_BOUNDS::START and #SPECIES_BOUNDS::STOP.
 
-    Input arguments:
-    `buffer::Array{String,1}` - 1-D array holding information extracted from the model file.
+Input arguments:
+`buffer::Array{String,1}` - 1-D array holding information extracted from the model file.
 
-    Output arguments:
-    `VLResult::VLResult` - concrete type holding information on species bounds.
-
+Output arguments:
+`VLResult::VLResult` - concrete type holding information on species bounds.
 """
 function parse_vff_species_bounds_section(buffer::Array{String,1})::VLResult
 
@@ -328,14 +325,13 @@ end
 """
     parse_vff_bio_types_section(buffer::Array{String,1})::VLResult
 
-    Parse contents of the model file and tokenize biological types. The bio-types section is written between the tags #BIO-TYPE-PREFIXES::START and #BIO-TYPE-PREFIXES::STOP. 
+Parse contents of the model file and tokenize biological types. The bio-types section is written between the tags #BIO-TYPE-PREFIXES::START and #BIO-TYPE-PREFIXES::STOP. 
 
-    Input arguments:
-    `buffer::Array{String,1}` - single array holding information extracted from the model file.
+Input arguments:
+`buffer::Array{String,1}` - single array holding information extracted from the model file.
 
-    Output arguments:
-    `VLResult::VLResult` - concrete type holding information on biological types.
-
+Output arguments:
+`VLResult::VLResult` - concrete type holding information on biological types.
 """
 function parse_vff_bio_types_section(buffer::Array{String,1})::VLResult
 
@@ -375,14 +371,13 @@ end
 """
     parse_vff_model_document(model::VLAbstractModelObject)::VLResult
 
-    Parse contents of the model file, extract information from various sections of the file and construct a rudimentary data dictionary.
+Parse contents of the model file, extract information from various sections of the file and construct a rudimentary data dictionary.
 
-    Input arguments:
-    `model::VLAbstractModelObject` - abstract Julia data object holding information for generating model code.
+Input arguments:
+`model::VLAbstractModelObject` - abstract Julia data object holding information for generating model code.
 
-    Output arguments:
-    `VLResult::VLResult` - concrete type holding an intermediate data dictionary construction.
-
+Output arguments:
+`VLResult::VLResult` - concrete type holding an intermediate data dictionary construction.
 """
 function parse_vff_model_document(model::VLAbstractModelObject)::VLResult
 
