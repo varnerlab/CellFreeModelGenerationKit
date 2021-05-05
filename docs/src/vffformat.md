@@ -1,5 +1,4 @@
 # VFF format
-
 VFF format is designed to be the standard input format of `CFMG.jl`.
 Aside from comments marked by preceding two slashes '//', each VFF file contains three parts: TXTL-SEQUENCE, metabolism, and gene regulatory network.
 Each part has its start and end marks, and specific syntactic format for describing biological information.

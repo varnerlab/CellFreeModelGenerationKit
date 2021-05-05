@@ -8,7 +8,8 @@ but have also been utilized for applications such as biosensing, prototyping gen
 A package for building cell-free models in [Julia language](9https://julialang.org). The purpose of this package is to generate model code for performing constraint-based modeling like flux balance analysis (FBA).
 
 ## Installation and Requirements
-`CellFreeModelGenerationKit.jl` is open source, available under a MIT software license. You can download this repository as a zip file, clone or pull it by using the command (from the command-line):
+`CellFreeModelGenerationKit.jl` is open source, available under a MIT software license. 
+You can download this repository as a zip file, clone or pull it by using the command (from the command-line):
 ```@example
 $ git clone https://github.com/varnerlab/CellFreeModelGenerationKit.git
 ```

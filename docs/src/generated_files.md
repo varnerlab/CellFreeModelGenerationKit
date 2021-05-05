@@ -1,6 +1,5 @@
 ## Generated files
-
-`CellFreeModelGenerationKit.jl` generates the following files for a `Static` probelm:
+`CellFreeModelGenerationKit.jl` generates the following files for a `Static` problem:
 
 Filename | Description
 -- | :--

@@ -1,3 +1,6 @@
+# Parser
+Parser details go here. 
+
 ```@docs
 parse_vff_sequence_section
 ```
