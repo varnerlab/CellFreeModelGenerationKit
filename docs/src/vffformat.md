@@ -4,23 +4,41 @@ Aside from comments marked by preceding two slashes '//', each VFF file contains
 Each part has its start and end marks, and specific syntactic format for describing biological information.
 
 
-## TXTL-SEQUENCE
+## Genetic sequence section 
+The `TXTL-SEQUENCE` section is used to incorporate genetic and protein sequence into the flux calculation. 
 
-item | des
----: | :---
-Start | \#TXTL-SEQUENCE::START
-End | \#TXTL-SEQUENCE::STOP
-Format | {X\|L},\{symbol1\},\{symbol2\}::sequence;
-Argument | Description
-{X\|L} | {'X' denotes transcription, while 'L' denoting translation}
-{symbol1} | {gene or protein symbol}
-{symbol2} | {'RX' or 'RL' denoting RNAP\_symbol or Ribosome\_symbol, respectively}
-{sequence} | {gene or protein sequence}
-Example | {X,cI\_ssrA,RX::atgagcacaaaaaagaaaccattaacacaagagcagcttgaggacgcacgtcgccttaaagc;} {L,cI\_ssrA,RL::MSTKKKPLTQEQLEDARRLKAIYEKKKNELGLSQESVADKMGMGQS;}
+```
+#TXTL-SEQUENCE::START
 
+// -- deGFP-ssrA gene and protein -------------------------------------------- //
+g_deGFP-ssrA,atggagcttttcactggcgttgttcccatcctggtcgagctggacggcgacgtaaacggccacaagttcagcgtgtccggc
+gagggcgagggcgatgccacctacggcaagctgaccctgaagttcatctgcaccaccggcaagctgcccgtgccctggccc
+accctcgtgaccaccctgacctacggcgtgcagtgcttcagccgctaccccgaccacatgaagcagcacgacttcttcaag
+tccgccatgcccgaaggctacgtccaggagcgcaccatcttcttcaaggacgacggcaactacaagacccgcgccgaggtg
+aagttcgagggcgacaccctggtgaaccgcatcgagctgaagggcatcgacttcaaggaggacggcaacatcctggggcac
+aagctggagtacaactacaacagccacaacgtctatatcatggccgacaagcagaagaacggcatcaaggtgaacttcaag
+atccgccacaacatcgaggacggcagcgtgcagctcgccgaccactaccagcagaacacccccatcggcgacggccccgtg
+ctgctgcccgacaaccactacctgagcacccagtccgccctgagcaaagaccccaacgagaagcgcgatcacatggtcctg
+ctggagttcgtgaccgccgccgggatcgcagcaaacgacgaaaactacgctttagctgcttaa;
 
+p_deGFP-ssrA,MELFTGVVPILVELDGDVNG
+HKFSVSGEGEGDATYGKLTL
+KFICTTGKLPVPWPTLVTTL
+TYGVQCFSRYPDHMKQHDFF
+KSAMPEGYVQERTIFFKDDG
+NYKTRAEVKFEGDTLVNRIE
+LKGIDFKEDGNILGHKLEYN
+YNSHNVYIMADKQKNGIKVN
+FKIRHNIEDGSVQLADHYQQ
+NTPIGDGPVLLPDNHYLSTQ
+SALSKDPNEKRDHMVLLEFV
+TAAGIAANDENYALAA;
 
-## METABOLISM
+#TXTL-SEQUENCE::STOP
+```
+
+## Metabolism section
+Put example here
 
 item | des
 ---: | :---
