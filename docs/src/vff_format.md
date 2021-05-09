@@ -4,7 +4,7 @@
 
 ### BIO-TYPE-PREFIXES section
 
-Bio-type prefixes records are used to identify and declare the types of species. This section is written between the #BIO-TYPE-PREFIXES::START and #BIO-TYPE-PREFIXES::STOP tags.
+Bio-type prefixes records are used to identify and declare the types of species. This section is written between the `#BIO-TYPE-PREFIXES::START` and `#BIO-TYPE-PREFIXES::STOP` tags.
 
 #### Example
 ```
@@ -23,7 +23,7 @@ M is a METABOLITE type
 
 ### TXTL-SEQUENCE section
 
-TXTL-SEQUENCE records are used to generate sequence specific transcription and translation reactions which are appended to the end of the metabolic reactions encoded in the METABOLISM section. This section is written between the #TXTL-SEQUENCE::START and #TXTL-SEQUENCE::STOP tags. TXTL-SEQUENCE records take the form:
+TXTL-SEQUENCE records are used to generate sequence specific transcription and translation reactions which are appended to the end of the metabolic reactions encoded in the METABOLISM section. This section is written between the `#TXTL-SEQUENCE::START` and `#TXTL-SEQUENCE::STOP` tags. TXTL-SEQUENCE records take the form:
 
 `{gene_symbol|protein_symbol}, sequence;`
 
@@ -64,7 +64,7 @@ TAAGIAANDENYALAA;
 
 ### METABOLISM section
 
-METABOLISM records are used to encode metabolic reactions. This section is written between the #METABOLISM::START and #METABOLISM::STOP tags. METABOLISM records consist of five fields, taking the form:
+METABOLISM records are used to encode metabolic reactions. This section is written between the `#METABOLISM::START` and `#METABOLISM::STOP` tags. METABOLISM records consist of five fields, taking the form:
 
 `reaction_name, [{; delimited set of ec numbers | []}], reactant_string, product_string, reversible tag;`
 
