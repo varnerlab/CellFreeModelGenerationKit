@@ -1,18 +1,18 @@
 """
-    read_model_document(path_to_file::String; 
+    read_model_document(path_to_file::String;
             strip_comments::Bool = true)::Array{String,1}
-    
-    Read each line of the Network.vff input file and extract contents of the file. Comments in the file (beginning by `//` symbol) are excluded by default, which can be overridden by the user.
 
-    Input arguments:
-    `path_to_file::String` - user-specified path where the Network.vff input file can be found and parsed
-    `strip_comments::Bool` - if true, comment lines (beginning by ‘//’ symbol) are excluded by the parser (optional).
+Read each line of the Network.vff input file and extract contents of the file. Comments in the file (beginning by `//` symbol) are excluded by default, which can be overridden by the user.
 
-    Output arguments:
-    `buffer::Array{String,1}` - single array holding information extracted from the Network.vff file.
+Input arguments:
+`path_to_file::String` - user-specified path where the Network.vff input file can be found and parsed
+`strip_comments::Bool` - if true, comment lines (beginning by ‘//’ symbol) are excluded by the parser (optional).
+
+Output arguments:
+`buffer::Array{String,1}` - single array holding information extracted from the Network.vff file.
 
 """
-function read_model_document(path_to_file::String; 
+function read_model_document(path_to_file::String;
     strip_comments::Bool = true)::Array{String,1}
 
     # initialize -
@@ -21,10 +21,10 @@ function read_model_document(path_to_file::String;
     # Read in the file -
     open("$(path_to_file)", "r") do file
         for line in eachline(file)
-            
+
             # exclude comments -
             if (occursin("//",line) == false && isempty(line) == false && strip_comments == true)
-                +(buffer,line) 
+                +(buffer,line)
             end
         end
     end
@@ -115,37 +115,37 @@ function write_program_components_to_disk(file_path::String, set_of_program_comp
     if (isdir(file_path) == false)
       mkpath(file_path)
     end
-  
+
     # go through each component, and dump the buffer to disk -
     for program_component in set_of_program_components
-  
+
       # We switch on type -
       filename = program_component.filename
       component_type = program_component.component_type
       if (component_type == :buffer)
-  
+
           # get the data -
           program_buffer = program_component.buffer
-  
+
           # build the path -
           path_to_program_file = file_path*"/"*filename
-  
+
           # Write the file -
           outfile = open(path_to_program_file, "w")
           write(outfile,program_buffer);
           close(outfile);
-  
+
       elseif (component_type == :matrix || component_type == :vector)
-          
+
           # get the matrix -
           program_matrix = program_component.matrix
-      
+
           # build the path -
           path_to_program_file = file_path*"/"*filename
-  
+
           # write the file -
           writedlm(path_to_program_file, program_matrix)
-  
+
       else
           error("unsupported program component type: $(component_type)")
       end
@@ -171,22 +171,22 @@ function move_existing_project_at_path(path_to_existing_project::String)::Bool
     loop_flag = true
     while loop_flag
 
-         # make a destination path - 
+         # make a destination path -
         destination_path = joinpath(parent_dir,"$(child_dir).$(current_backup_index)")
 
         # we don't have this dir, we are done -
         if (isdir(destination_path) == false)
             loop_flag = false
-        end    
+        end
 
         # ok, looks like we already have this dir, update the counter -
         current_backup_index = current_backup_index + 1
     end
-    
+
     # mv -
     mv(path_to_existing_project, destination_path)
 
-    # check - 
+    # check -
     if (isdir(destination_path) == false)
         return false
     end
@@ -210,10 +210,10 @@ Output arguments:
 None
 """
 function generate_default_project_file(path_to_project_file::String)::VLResult
-    
+
     # ok, if we get here, then we have a clean place to generate the default project structure -
     # We need to two things for a project, the defaults file, and a blank network file with all the sections -
-    
+
     # TODO: do we need check for existing file w/same?
 
     # Transfer distrubtion files to the output -> these files are shared between model types -

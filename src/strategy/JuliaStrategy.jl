@@ -1,9 +1,9 @@
 # -- PRIVATE FUNCTIONS NOT EXPORTED -------------------------------------------------------------- #
 function _build_copyright_header_buffer(intermediate_dictionary::Dict{String,Any})
-  
+
     # What is the current year?
     current_year = string(Dates.year(now()))
-  
+
     # Get comment data from
     buffer = ""
     buffer*= "# ----------------------------------------------------------------------------------- #\n"
@@ -29,22 +29,22 @@ function _build_copyright_header_buffer(intermediate_dictionary::Dict{String,Any
     buffer*= "# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN\n"
     buffer*= "# THE SOFTWARE.\n"
     buffer*= "# ----------------------------------------------------------------------------------- #\n"
-  
+
     # return -
-    return buffer  
+    return buffer
 end
 
 # -- PUBLIC FUNCTIONS EXPORTED --------------------------------------------------------------------- #
 """
     build_data_dictionary_program_component(intermediate_dictionary::Dict{String,Any})::VLResult
 
-    Generate Data.jl. Data.jl includes a method to build a default data dictionary. This dictionary will contain information about the model system along with default bounds useful for flux balance analysis.
+Generate Data.jl. Data.jl includes a method to build a default data dictionary. This dictionary will contain information about the model system along with default bounds useful for flux balance analysis.
 
-    Input arguments:
-    `intermediate_dictionary::Dict{String,Any}` - data dictionary containing the master reaction table and molecular species participating in the reactions.
+Input arguments:
+`intermediate_dictionary::Dict{String,Any}` - data dictionary containing the master reaction table and molecular species participating in the reactions.
 
-    Output arguments:
-    `VLResult::VLResult` - concrete data type holding the data dictionary.
+Output arguments:
+`VLResult::VLResult` - concrete data type holding the data dictionary.
 
 """
 function build_data_dictionary_program_component(intermediate_dictionary::Dict{String,Any})::VLResult
@@ -53,14 +53,14 @@ function build_data_dictionary_program_component(intermediate_dictionary::Dict{S
     filename = "Data.jl"
     buffer = Array{String,1}()
 
-    try 
+    try
 
         # get the reaction table -
         master_reaction_table = intermediate_dictionary[ir_master_reaction_table_key]
 
         # how many reactions do we have?
         (number_of_reactions, number_of_fields) = size(master_reaction_table)
-        
+
         # build the header -
         header_buffer = _build_copyright_header_buffer(intermediate_dictionary)
         +(buffer, header_buffer)
@@ -80,7 +80,7 @@ function build_data_dictionary_program_component(intermediate_dictionary::Dict{S
         +(buffer,"\n")
         +(buffer,"\t\t# setup the flux bounds array - \n")
         +(buffer,"\t\tflux_bounds_array = [\n")
-        
+
         # populate the flux bounds -
         for reaction_index = 1:number_of_reactions
 
@@ -97,7 +97,7 @@ function build_data_dictionary_program_component(intermediate_dictionary::Dict{S
             else
                 new_bounds_record_string="\t\t\t0.0 DEFAULT_UPPER_BOUND\t;\t#\t$(reaction_index)\t$(reaction_tag)\n"
             end
-            
+
             # push -
             +(buffer, new_bounds_record_string)
         end
@@ -106,7 +106,7 @@ function build_data_dictionary_program_component(intermediate_dictionary::Dict{S
 
         +(buffer,"\t\t# setup the species bounds array - \n")
         +(buffer,"\t\tspecies_bounds_array = zeros(number_of_species,2)\n")
-        
+
         +(buffer,"\n")
         +(buffer,"\t\t# ----------------------------------------------------------------------------------- # \n")
         +(buffer,"\t\tdata_dictionary[\"flux_bounds_array\"] = flux_bounds_array\n")
@@ -121,14 +121,14 @@ function build_data_dictionary_program_component(intermediate_dictionary::Dict{S
         +(buffer,"\t\treturn data_dictionary\n")
         +(buffer,"\tcatch error\n")
         +(buffer,"\t\trethrow(error)\n")
-        +(buffer,"\tend\n")  
-        +(buffer,"end",prefix="",suffix="\n")      
-        
-    
+        +(buffer,"\tend\n")
+        +(buffer,"end",prefix="",suffix="\n")
+
+
         # collapse -
         flat_buffer = ""
         [flat_buffer *= line for line in buffer]
-        
+
         # package up into a NamedTuple -
         program_component = (buffer=flat_buffer, filename=filename, component_type=:buffer)
 
@@ -143,14 +143,14 @@ end
 # function to build Control.jl
 """
     Function: build_control_program_component(intermediate_dictionary::Dict{String,Any})::VLResult
-    
-    Generate Control.jl. Control.jl includes methods to calculate transcription and translation control functions at time t.
 
-    Input arguments:
-    `intermediate_dictionary::Dict{String,Any}` - data dictionary containing the master reaction table and molecular species participating in the reactions.
+Generate Control.jl. Control.jl includes methods to calculate transcription and translation control functions at time t.
 
-    Output arguments:
-    `VLResult::VLResult` - concrete data type holding control values for each rate.
+Input arguments:
+`intermediate_dictionary::Dict{String,Any}` - data dictionary containing the master reaction table and molecular species participating in the reactions.
+
+Output arguments:
+`VLResult::VLResult` - concrete data type holding control values for each rate.
 
 """
 function build_control_program_component(intermediate_dictionary::Dict{String,Any})::VLResult
@@ -166,12 +166,12 @@ function build_control_program_component(intermediate_dictionary::Dict{String,An
         +(buffer, header_buffer)
         +(buffer, "\n")
 
-        
+
 
         # collapse -
         flat_buffer = ""
         [flat_buffer *= line for line in buffer]
-        
+
         # package up into a NamedTuple -
         program_component = (buffer=flat_buffer, filename=filename, component_type=:buffer)
 
@@ -186,14 +186,14 @@ end
 # function to build Kinetics.jl
 """
     build_kinetics_dictionary_program_component(intermediate_dictionary::Dict{String,Any})::VLResult
-    
-    Generate Kinetics.jl. Kinetics.jl includes methods to calculate transcription and translation rates based on biophysical model parameters.
 
-    Input arguments:
-    `intermediate_dictionary::Dict{String,Any}` - data dictionary containing the master reaction table and molecular species participating in the reactions.
+Generate Kinetics.jl. Kinetics.jl includes methods to calculate transcription and translation rates based on biophysical model parameters.
 
-    Output arguments:
-    `VLResult::VLResult` - concrete data type holding all rates.
+Input arguments:
+`intermediate_dictionary::Dict{String,Any}` - data dictionary containing the master reaction table and molecular species participating in the reactions.
+
+Output arguments:
+`VLResult::VLResult` - concrete data type holding all rates.
 
 """
 function build_kinetics_program_component(intermediate_dictionary::Dict{String,Any})::VLResult
@@ -202,7 +202,7 @@ function build_kinetics_program_component(intermediate_dictionary::Dict{String,A
     filename = "Kinetics.jl"
     buffer = Array{String,1}()
 
-    try 
+    try
 
         # build the header -
         header_buffer = _build_copyright_header_buffer(intermediate_dictionary)
@@ -214,7 +214,7 @@ function build_kinetics_program_component(intermediate_dictionary::Dict{String,A
         # collapse -
         flat_buffer = ""
         [flat_buffer *= line for line in buffer]
-        
+
         # package up into a NamedTuple -
         program_component = (buffer=flat_buffer, filename=filename, component_type=:buffer)
 

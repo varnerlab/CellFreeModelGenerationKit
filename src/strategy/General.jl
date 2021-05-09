@@ -5,11 +5,11 @@ function _extract_reaction_phrase_table(phrase::String)::Dict{String,Float64}
 
     # compnents -
     if (occursin("+",phrase) == true)
-            
+
         # ok, so we have some +'s
         component_array = split(phrase,"+")
         for component in component_array
-            
+
             # split around the * -
             inner_component_array = split(component,"*")
 
@@ -21,9 +21,9 @@ function _extract_reaction_phrase_table(phrase::String)::Dict{String,Float64}
                 key = string(last(inner_component_array))
                 value = 1.0
                 reaction_phrase_table[key] = value
-                
+
             elseif (length(inner_component_array) == 2)
-            
+
                 # we have a species w/a coefficient -
                 key = string(last(inner_component_array))
                 value = parse(Float64, first(inner_component_array))
@@ -35,7 +35,7 @@ function _extract_reaction_phrase_table(phrase::String)::Dict{String,Float64}
         end
     else
 
-        # single species, possibly w/* 
+        # single species, possibly w/*
         # split around the * -
         phrase_component_array = split(phrase,"*")
         if (length(phrase_component_array) == 1)
@@ -44,9 +44,9 @@ function _extract_reaction_phrase_table(phrase::String)::Dict{String,Float64}
             key = string(last(phrase_component_array))
             value = 1.0
             reaction_phrase_table[key] = value
-            
+
         elseif (length(phrase_component_array) == 2)
-        
+
             # we have a species w/a coefficient -
             key = string(last(phrase_component_array))
             value = parse(Float64, first(phrase_component_array))
@@ -57,16 +57,16 @@ function _extract_reaction_phrase_table(phrase::String)::Dict{String,Float64}
             throw(DimensionMismatch("phrase component array larger than 2"))
         end
     end
-    
+
     # return -
     return reaction_phrase_table
 end
 
 function _extract_stoichiometric_coefficient(phrase::String, speciesSymbol::String)::Float64
-    
+
     # initialize -
-    stoichiometric_coefficient = 0.0 # default is 0, species in NOT involved 
-    
+    stoichiometric_coefficient = 0.0 # default is 0, species in NOT involved
+
     # get the reaction phrase table -
     reaction_phrase_table = _extract_reaction_phrase_table(phrase)
 
@@ -83,14 +83,14 @@ end
 
 """
     generate_stoichiometric_matrix(intermediate_dictionary::Dict{String,Any})::VLResult
-    
-    Generate a stoichiometric matrix based on the biochemical model reaction network.
 
-    Input arguments:
-    `intermediate_dictionary::Dict{String,Any}` - data dictionary containing the master reaction table and molecular species participating in the reactions.
+Generate a stoichiometric matrix based on the biochemical model reaction network.
 
-    Output arguments:
-    `VLResult::VLResult` - concrete data type holding the generated stoichiometric matrix.
+Input arguments:
+`intermediate_dictionary::Dict{String,Any}` - data dictionary containing the master reaction table and molecular species participating in the reactions.
+
+Output arguments:
+`VLResult::VLResult` - concrete data type holding the generated stoichiometric matrix.
 
 """
 function generate_stoichiometric_matrix(intermediate_dictionary::Dict{String,Any})::VLResult
@@ -124,7 +124,7 @@ function generate_stoichiometric_matrix(intermediate_dictionary::Dict{String,Any
 
             # process each reaction -
             for reaction_index = 1:number_of_reactions
-                
+
                 # get the left and right phrases -
                 left_phrase = reaction_data_frame[reaction_index,:left_phrase]
                 right_phrase = reaction_data_frame[reaction_index,:right_phrase]

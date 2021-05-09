@@ -6,23 +6,23 @@ function _reorder_logic_with_callback(symbol_array::Array{String,1}; callback::U
         return callback(symbol_array)
     end
 
-    # otherwise - alphabetical 
+    # otherwise - alphabetical
     return sort(symbol_array)
 end
 # ------------------------------------------------------------------------------------------------ #
 
 """
-    reorder_molecular_symbol_array(symbol_array::Array{String,1}; 
+    reorder_molecular_symbol_array(symbol_array::Array{String,1};
           callback::Union{Function,Nothing} = nothing)::Array{String,1}
-    
-    Reorder species symbol names alphabetically (default implementation) unless a callback function is passed, in which case sorting is done based on the user-defined routine.
 
-    Input arguments:
-    `symbol_array::Array{String,1}` - array holding symbol names for all molecular species in the network.
-    `callback::Union{Function,Nothing}` - user-defined function to reorder species symbol names (optional).
+Reorder species symbol names alphabetically (default implementation) unless a callback function is passed, in which case sorting is done based on the user-defined routine.
 
-    Output arguments:
-    `symbol_array::Array{String,1}` - sorted molecular species symbol array.
+Input arguments:
+`symbol_array::Array{String,1}` - array holding symbol names for all molecular species in the network.
+`callback::Union{Function,Nothing}` - user-defined function to reorder species symbol names (optional).
+
+Output arguments:
+`symbol_array::Array{String,1}` - sorted molecular species symbol array.
 
 """
 function reorder_molecular_symbol_array(symbol_array::Array{String,1}; callback::Union{Function,Nothing} = nothing)::Array{String,1}
@@ -30,17 +30,17 @@ function reorder_molecular_symbol_array(symbol_array::Array{String,1}; callback:
 end
 
 """
-    reorder_reaction_symbol_array(symbol_array::Array{String,1}; 
+    reorder_reaction_symbol_array(symbol_array::Array{String,1};
           callback::Union{Function,Nothing} = nothing)::Array{String,1}
-    
-    Reorder reaction symbol names alphabetically (default implementation) unless a callback function is passed, in which case sorting is done based on the user-defined routine.
 
-    Input arguments:
-    `symbol_array::Array{String,1}` - array holding symbol names for all reactions in the network.
-    `callback::Union{Function,Nothing}` - user-defined function to reorder reaction names (optional).
+Reorder reaction symbol names alphabetically (default implementation) unless a callback function is passed, in which case sorting is done based on the user-defined routine.
 
-    Output arguments:
-    `symbol_array::Array{String,1}` - sorted reaction symbol array.
+Input arguments:
+`symbol_array::Array{String,1}` - array holding symbol names for all reactions in the network.
+`callback::Union{Function,Nothing}` - user-defined function to reorder reaction names (optional).
+
+Output arguments:
+`symbol_array::Array{String,1}` - sorted reaction symbol array.
 
 """
 function reorder_reaction_symbol_array(symbol_array::Array{String,1}; callback::Union{Function,Nothing} = nothing)::Array{String,1}
