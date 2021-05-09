@@ -2,7 +2,7 @@
 `CellFreeModelGenerationKit.jl` generates the following files for a `Static` problem:
 
 Filename | Description
--- | :--
+-- | --
 `Include.jl` | Includes all the generated files into the current workspace
 `Static.jl` | Solves the static Flux Balance Analysis (FBA) problem
 `Checks.jl` | Checks whether or not a file with the given name exists in the current directory
