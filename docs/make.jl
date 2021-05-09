@@ -10,7 +10,7 @@ makedocs(
     doctest = true,
     pages = [
         "Home" => "index.md",
-        "Quick start"=>"Quick.md",
+        "Quick start" => "Quick.md",
         "Files" => "generated_files.md",
         "VFF" => "vff_format.md",
         "Parser" => "parser.md"
