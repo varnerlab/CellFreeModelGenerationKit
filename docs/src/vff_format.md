@@ -4,7 +4,7 @@
 
 ### BIO-TYPE-PREFIXES section
 
-Bio-type prefixes records are used to identify and declare the types of species.
+Bio-type prefixes records are used to identify and declare the types of species. This section is written between the #BIO-TYPE-PREFIXES::START and #BIO-TYPE-PREFIXES::STOP tags.
 
 #### Example
 ```
@@ -23,15 +23,11 @@ M is a METABOLITE type
 
 ### TXTL-SEQUENCE section
 
-TXTL-SEQUENCE records
+TXTL-SEQUENCE records are used to generate sequence specific transcription and translation reactions which are appended to the end of the metabolic reactions encoded in the METABOLISM section. This section is written between the #TXTL-SEQUENCE::START and #TXTL-SEQUENCE::STOP tags. TXTL-SEQUENCE records take the form:
 
-TXTL-SEQUENCE records are used to generate sequence specific transcription and translation reactions which are appended to the end of the metabolic reactions encoded in the METABOLISM section. TXTL-SEQUENCE records take the form:
+`{gene_symbol|protein_symbol}, sequence;`
 
-{gene_symbol|protein_symbol}, sequence;
-where:
-
-{gene_symbol|protein_symbol}: species symbol used in the model. The species symbol is a user specified identifier that is used in the model. No spaces or special chars, _ are acceptable, but +,- etc are not acceptable.
-sequence: nucleotide (X record) or protein (L) sequence in plain format.
+where `{gene_symbol|protein_symbol}` is the species symbol used in the model. The species symbol is a user specified identifier that is used in the model. Do not use spaces or special chars: _ is acceptable, but +,- etc are not acceptable. `sequence` is the nucleotide or protein sequence in plain format.
 
 TXTL-SEQUENCE records are terminated by a ; character.
 
@@ -68,15 +64,11 @@ TAAGIAANDENYALAA;
 
 ### METABOLISM section
 
-METABOLISM records are used to encode metabolic reactions. METABOLISM records consist of five fields.
+METABOLISM records are used to encode metabolic reactions. This section is written between the #METABOLISM::START and #METABOLISM::STOP tags. METABOLISM records consist of five fields, taking the form:
 
-reaction_name, [{; delimited set of ec numbers | []}], reactant_string, product_string, reversible tag;
-where:
+`reaction_name, [{; delimited set of ec numbers | []}], reactant_string, product_string, reversible tag;`
 
-reaction_name is a unique identifier for the reaction.
-reactant_string includes all the reactants participating the reaction.
-product_string includes all products of the reaction. 
-reversible tag is true if the reactions is reversible, otherwise it is false.
+where `reaction_name` is a unique identifier for the reaction, `reactant_string` includes all the reactants participating the reaction, `product_string` includes all products of the reaction and `reversible tag` is true if the reactions is reversible, otherwise it is false.
 
 #### Example
 ```
@@ -107,7 +99,6 @@ R_pgi,[5.3.1.9],M_g6p_c,M_f6p_c,true
 #### SPECIES_BOUNDS section
 
 #### Example
-
 ```
 #SPECIES_BOUNDS::START
 
@@ -123,7 +114,6 @@ M_h_e is UNBOUNDED
 GRN records are used to define the biology of the model being generated. In this section, define various types of species (promoters, genes and polymerases) involved in the regulatory circuit and their regulatory action.
 
 #### Example
-
 ```
 #GRN::START
 
@@ -155,4 +145,3 @@ p_cI-ssrA binds to P70 and inhibits g_deGFP-ssrA expression
 
 #GRN::STOP
 ```
-
