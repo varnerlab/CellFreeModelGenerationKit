@@ -11,9 +11,8 @@ makedocs(
     pages = [
         "Home" => "index.md",
         "Quick start"=>"Quick.md",
-        "Generation" => "model_generation.md",
         "Files" => "generated_files.md",
-        "VFF" => "vffformat.md",
+        "VFF" => "vff_format.md",
         "Parser" => "parser.md"
     ],
 )
