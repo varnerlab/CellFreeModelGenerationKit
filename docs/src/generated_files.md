@@ -1,5 +1,5 @@
 ## Generated files
-`CellFreeModelGenerationKit.jl` generates the following files for a `Static` problem:
+`CellFreeModelGenerationKit.jl` generates the following files for a `Static` FBA problem:
 
 Filename | Description
 --- | ---

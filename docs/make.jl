@@ -13,7 +13,7 @@ makedocs(
         "Quick start" => "Quick.md",
         "Files" => "generated_files.md",
         "VFF" => "vff_format.md",
-        "Parser" => "parser.md"
+        "Advanced" => "parser.md"
     ],
 )
 
