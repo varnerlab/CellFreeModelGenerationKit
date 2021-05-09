@@ -1,10 +1,8 @@
-## Quick start guide
-
-### Obtain metabolism file
+## Obtain metabolism file
 
 Create your own metabolism file that describes the system in consideration with the corresponding TXTL sequence, metabolism and the GRN section. This file should be structured in a VFF format as mentioned here (redirect to VFF format). Note the path to this metabolism file.
 
-### Generate Model Code
+## Generate Model Code
 
 To generate cell free model code, first load the `CellFreeModelGenerationKit.jl` package, then build a Julia model object from the REPL using the command `build_julia_model_object`.
 
@@ -33,7 +31,7 @@ julia> generate(julia_model_object)
 
 The model files will now be available at the user specified output directory. 
 
-### Modify the constraints
+## Modify constraints
 
 Navigate to the user specified output path and locate the `src` directory.
 
@@ -41,7 +39,7 @@ Modify the constraints of the linear programming problem according to your need.
 
 Update the objective function by updating the objective coefficient array. By default, the problem is set up as a minimization problem (min_flag = true) which can be updated as well, according to the objective.
 
-### Run `Static.jl`
+## Run `Static.jl`
 
 Finally, to run the static FBA problem, issue the following command in the Julia REPL  -
 
