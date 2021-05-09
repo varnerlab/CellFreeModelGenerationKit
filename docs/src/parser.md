@@ -7,7 +7,7 @@ To extend the functionality of the existing code generator, advanced users can c
 read_model_document
 ```
 ```@docs
-generate_default_project_file
+generate_default_project
 ```
 
 ## Methods to build the data dictionary
