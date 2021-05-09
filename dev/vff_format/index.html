@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>VFF · CellFreeModelGenerationKit</title><link href="https://fonts.googleapis.com/css?family=Lato|Roboto+Mono" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL=".."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../assets/documenter.js"></script><script src="../siteinfo.js"></script><script src="../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../assets/themeswap.js"></script></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit">CellFreeModelGenerationKit</span></div><form class="docs-search" action="../search/"><input class="docs-search-query" id="documenter-search-query" name="q" type="text" placeholder="Search docs"/></form><ul class="docs-menu"><li><a class="tocitem" href="../">Home</a></li><li><a class="tocitem" href="../Quick/">Quick start</a></li><li><a class="tocitem" href="../generated_files/">Files</a></li><li class="is-active"><a class="tocitem" href>VFF</a><ul class="internal"><li><a class="tocitem" href="#VFF-File-Structure"><span>VFF File Structure</span></a></li></ul></li><li><a class="tocitem" href="../parser/">Parser</a></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><nav class="breadcrumb"><ul class="is-hidden-mobile"><li class="is-active"><a href>VFF</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>VFF</a></li></ul></nav><div class="docs-right"><a class="docs-edit-link" href="https://github.com/varnerlab/CellFreeModelGenerationKit.jl/blob/master/docs/src/vff_format.md" title="Edit on GitHub"><span class="docs-icon fab"></span><span class="docs-label is-hidden-touch">Edit on GitHub</span></a><a class="docs-settings-button fas fa-cog" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-sidebar-button fa fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a></div></header><article class="content" id="documenter-page"><h2 id="VFF-File-Structure"><a class="docs-heading-anchor" href="#VFF-File-Structure">VFF File Structure</a><a id="VFF-File-Structure-1"></a><a class="docs-heading-anchor-permalink" href="#VFF-File-Structure" title="Permalink"></a></h2><p><code>CellFreeModelGenerationKit.jl</code> transforms a structured text file into cell free model code. <code>CellFreeModelGenerationKit.jl</code> text files consist of delimited record types organized into five sections BIO-TYPE-PREFIXES, TXTL-SEQUENCE, METABOLISM, SPECIES-BOUNDS and GRN. Lines beginning with <code>//</code> are comments which are excluded by default. This can be modified by passing <code>strip_comments = false</code> to the <code>read_model_document</code> method.</p><h3 id="BIO-TYPE-PREFIXES-section"><a class="docs-heading-anchor" href="#BIO-TYPE-PREFIXES-section">BIO-TYPE-PREFIXES section</a><a id="BIO-TYPE-PREFIXES-section-1"></a><a class="docs-heading-anchor-permalink" href="#BIO-TYPE-PREFIXES-section" title="Permalink"></a></h3><p>Bio-type prefixes records are used to identify and declare the types of species.</p><h4 id="Example"><a class="docs-heading-anchor" href="#Example">Example</a><a id="Example-1"></a><a class="docs-heading-anchor-permalink" href="#Example" title="Permalink"></a></h4><pre><code class="language-none">#BIO-TYPE-PREFIXES::START
+
+// Declare type prefixes -
+g is a GENE type
+p is a PROTEIN type
+mRNA is a MESSENGER-RNA type
+tRNA is a TRANSFER-RNA type
+regRNA is a REGULATORY-RNA type
+M is a METABOLITE type
+
+#BIO-TYPE-PREFIXES::STOP</code></pre><h3 id="TXTL-SEQUENCE-section"><a class="docs-heading-anchor" href="#TXTL-SEQUENCE-section">TXTL-SEQUENCE section</a><a id="TXTL-SEQUENCE-section-1"></a><a class="docs-heading-anchor-permalink" href="#TXTL-SEQUENCE-section" title="Permalink"></a></h3><p>TXTL-SEQUENCE records</p><p>TXTL-SEQUENCE records are used to generate sequence specific transcription and translation reactions which are appended to the end of the metabolic reactions encoded in the METABOLISM section. TXTL-SEQUENCE records take the form:</p><p>{gene<em>symbol|protein</em>symbol}, sequence; where:</p><p>{gene<em>symbol|protein</em>symbol}: species symbol used in the model. The species symbol is a user specified identifier that is used in the model. No spaces or special chars, _ are acceptable, but +,- etc are not acceptable. sequence: nucleotide (X record) or protein (L) sequence in plain format.</p><p>TXTL-SEQUENCE records are terminated by a ; character.</p><h4 id="Example-2"><a class="docs-heading-anchor" href="#Example-2">Example</a><a class="docs-heading-anchor-permalink" href="#Example-2" title="Permalink"></a></h4><pre><code class="language-none">#TXTL-SEQUENCE::START
+
+// -- deGFP-ssrA gene and protein -------------------------------------------- //
+g_deGFP-ssrA,atggagcttttcactggcgttgttcccatcctggtcgagctggacggcgacgtaaacggccacaagttcagcgtgtccggc
+gagggcgagggcgatgccacctacggcaagctgaccctgaagttcatctgcaccaccggcaagctgcccgtgccctggccc
+accctcgtgaccaccctgacctacggcgtgcagtgcttcagccgctaccccgaccacatgaagcagcacgacttcttcaag
+tccgccatgcccgaaggctacgtccaggagcgcaccatcttcttcaaggacgacggcaactacaagacccgcgccgaggtg
+aagttcgagggcgacaccctggtgaaccgcatcgagctgaagggcatcgacttcaaggaggacggcaacatcctggggcac
+aagctggagtacaactacaacagccacaacgtctatatcatggccgacaagcagaagaacggcatcaaggtgaacttcaag
+atccgccacaacatcgaggacggcagcgtgcagctcgccgaccactaccagcagaacacccccatcggcgacggccccgtg
+ctgctgcccgacaaccactacctgagcacccagtccgccctgagcaaagaccccaacgagaagcgcgatcacatggtcctg
+ctggagttcgtgaccgccgccgggatcgcagcaaacgacgaaaactacgctttagctgcttaa;
+
+p_deGFP-ssrA,MELFTGVVPILVELDGDVNG
+HKFSVSGEGEGDATYGKLTL
+KFICTTGKLPVPWPTLVTTL
+TYGVQCFSRYPDHMKQHDFF
+KSAMPEGYVQERTIFFKDDG
+NYKTRAEVKFEGDTLVNRIE
+LKGIDFKEDGNILGHKLEYN
+YNSHNVYIMADKQKNGIKVN
+FKIRHNIEDGSVQLADHYQQ
+NTPIGDGPVLLPDNHYLSTQ
+SALSKDPNEKRDHMVLLEFV
+TAAGIAANDENYALAA;
+
+#TXTL-SEQUENCE::STOP</code></pre><h3 id="METABOLISM-section"><a class="docs-heading-anchor" href="#METABOLISM-section">METABOLISM section</a><a id="METABOLISM-section-1"></a><a class="docs-heading-anchor-permalink" href="#METABOLISM-section" title="Permalink"></a></h3><p>METABOLISM records are used to encode metabolic reactions. METABOLISM records consist of five fields.</p><p>reaction<em>name, [{; delimited set of ec numbers | []}], reactant</em>string, product_string, reversible tag; where:</p><p>reaction<em>name is a unique identifier for the reaction. reactant</em>string includes all the reactants participating the reaction. product_string includes all products of the reaction.  reversible tag is true if the reactions is reversible, otherwise it is false.</p><h4 id="Example-3"><a class="docs-heading-anchor" href="#Example-3">Example</a><a class="docs-heading-anchor-permalink" href="#Example-3" title="Permalink"></a></h4><pre><code class="language-none">#METABOLISM::START
+
+// ======================================================================
+// GLYCOLYSIS/ GLUCONEOGENESIS
+// ======================================================================
+// Glycogen phosphorylate (gP) 2.4.1.1
+R_gp_1,[2.4.1.1],M_maltodextrin6_c+M_pi_c,M_maltodextrin5_c+M_g1p_c,false
+R_gp_2,[2.4.1.1],M_maltodextrin5_c+M_pi_c,M_maltodextrin4_c+M_g1p_c,false
+R_gp_3,[2.4.1.1],M_maltodextrin4_c+M_pi_c,M_maltodextrin3_c+M_g1p_c,false
+R_gp_4,[2.4.1.1],M_maltodextrin3_c+M_pi_c,M_maltose_c+M_g1p_c,false
+R_gp,[2.4.1.1],M_maltose_c+M_pi_c,M_glc_D_c+M_g1p_c,false
+
+// Phosphoglucomutase (pgm) 5.4.2.2
+R_pgm,[5.4.2.2],M_g1p_c,M_g6p_c,false
+
+// Glucokinase (glk) EC 2.7.1.2
+R_glk_atp,[2.7.1.2],M_atp_c+M_glc_D_c,M_adp_c+M_g6p_c,false
+
+// Phosphoglucose isomerase (pgi) 5.3.1.9
+R_pgi,[5.3.1.9],M_g6p_c,M_f6p_c,true
+
+#METABOLISM::STOP</code></pre><h4 id="SPECIES_BOUNDS-section"><a class="docs-heading-anchor" href="#SPECIES_BOUNDS-section">SPECIES_BOUNDS section</a><a id="SPECIES_BOUNDS-section-1"></a><a class="docs-heading-anchor-permalink" href="#SPECIES_BOUNDS-section" title="Permalink"></a></h4><h4 id="Example-4"><a class="docs-heading-anchor" href="#Example-4">Example</a><a class="docs-heading-anchor-permalink" href="#Example-4" title="Permalink"></a></h4><pre><code class="language-none">#SPECIES_BOUNDS::START
+
+M_o2_e is a SOURCE
+M_co2_e is a SINK
+M_h_e is UNBOUNDED
+
+#SPECIES_BOUNDS::STOP</code></pre><h4 id="GRN-section"><a class="docs-heading-anchor" href="#GRN-section">GRN section</a><a id="GRN-section-1"></a><a class="docs-heading-anchor-permalink" href="#GRN-section" title="Permalink"></a></h4><p>GRN records are used to define the biology of the model being generated. In this section, define various types of species (promoters, genes and polymerases) involved in the regulatory circuit and their regulatory action.</p><h4 id="Example-5"><a class="docs-heading-anchor" href="#Example-5">Example</a><a class="docs-heading-anchor-permalink" href="#Example-5" title="Permalink"></a></h4><pre><code class="language-none">#GRN::START
+
+// What are my promoters, genes and polymerases in the circuit?
+P70 is a promoter
+P28 is a promoter
+g_deGFP-ssrA is a gene
+g_cI-ssrA is a gene
+g_s28 is a gene
+RNAP is a RNA_POLYMERASE_II_SYMBOL
+RIBOSOME is a RIBOSOME_SYMBOL
+
+// formation of s70_RNAP and s28_RNAP -
+p_s70 binds to RNAP and forms s70_RNAP
+p_s28 binds to RNAP and forms s28_RNAP
+
+// P70 promoter TX/TL activity -
+s70_RNAP binds to P70 and activates g_deGFP-ssrA expression to form mRNA_deGFP-ssrA
+mRNA_deGFP-ssrA is translated by RIBOSOME to form p_deGFP_ssrA
+s70_RNAP binds to P70 and activates g_s28 expression to form mRNA_s28
+mRNA_s28 is translated by RIBOSOME to form p_s28
+
+// P28 promoter activity -
+s28_RNAP binds to P28 and activates g_cI-ssrA expression to form mRNA_cI-ssrA
+
+// p_cI-ssrA action -
+p_cI-ssrA binds to P70 and inhibits g_s28 expression
+p_cI-ssrA binds to P70 and inhibits g_deGFP-ssrA expression
+
+#GRN::STOP</code></pre></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../generated_files/">« Files</a><a class="docs-footer-nextpage" href="../parser/">Parser »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> on <span class="colophon-date" title="Sunday 9 May 2021 15:38">Sunday 9 May 2021</span>. Using Julia version 1.5.4.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
